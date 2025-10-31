@@ -1,0 +1,15 @@
+{
+	"name": "tubaishat.com",
+	"version": "1.0.0",
+	"description": "My personal portfolio website",
+	"author": "Rayyan Tubaishat",
+	"license": "MIT",
+	"scripts": {
+		"build:css": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/tailwind.min.css --minify",
+		"watch:css": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/tailwind.min.css --watch"
+	},
+	"devDependencies": {
+		"@tailwindcss/cli": "4.1.16",
+		"tailwindcss": "4.1.16"
+	}
+}
