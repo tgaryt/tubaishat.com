@@ -1,6 +1,5 @@
 <?php
 $canonical_url = SITE_URL;
-$absolute_profile_image = SITE_URL . '/' . PROFILE_IMAGE;
 $absolute_og_image = SITE_URL . '/' . OG_IMAGE;
 $person_id = SITE_URL . '/#person';
 $profile_page_id = SITE_URL . '/#profilepage';
@@ -24,12 +23,6 @@ $person = [
 	'jobTitle' => $about_section['developer_info']['title'],
 	'description' => SITE_DESCRIPTION,
 	'url' => SITE_URL,
-	'image' => [
-		'@type' => 'ImageObject',
-		'url' => $absolute_profile_image,
-		'width' => 512,
-		'height' => 512,
-	],
 	'email' => $contact_info['email'],
 	'telephone' => $contact_info['phone'],
 	'address' => [

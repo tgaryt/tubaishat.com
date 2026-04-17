@@ -9,7 +9,6 @@ define('SITE_LANG', 'en');
 define('THEME_COLOR', '#0ea5e9');
 define('ASSETS_URL', 'assets/');
 define('CV_PATH', 'assets/files/ryt-tubaishat.pdf');
-define('PROFILE_IMAGE', 'assets/images/rayyan.jpg');
 define('OG_IMAGE', 'assets/images/og-image.png');
 
 $contact_info = [
@@ -48,7 +47,7 @@ $about_section = [
 	'paragraphs' => [
 		'Full Stack Developer with over 3 years of experience building and maintaining web applications end-to-end. I work across the entire stack, writing PHP and Node.js on the backend, JavaScript and TypeScript on the frontend, and designing database schemas with MySQL.',
 		'I take applications from initial design through production deployment, with a focus on clean code, maintainability, and measurable performance. My experience spans modernizing legacy codebases and delivering greenfield projects from the ground up.',
-		"Beyond the code, I enjoy the operational side: managing Linux servers, handling SSL and DNS, and keeping deployments running smoothly. I'm currently at EZ-AD TV and continuously learning new tools and techniques to build better software.",
+		"Beyond the code, I enjoy the operational side: managing Linux servers, handling SSL and DNS, and keeping deployments running smoothly. I'm currently at EZ-AD TV, Inc. and continuously learning new tools and techniques to build better software.",
 	],
 	'stats' => [
 		['value' => '3+', 'label' => 'Years Experience'],
@@ -61,7 +60,7 @@ $experience_section = [
 	'technologies_label' => 'Key Technologies',
 	'jobs' => [
 		[
-			'company' => 'EZ-AD TV',
+			'company' => 'EZ-AD TV, Inc.',
 			'location' => 'Remote',
 			'title' => 'Full Stack Developer',
 			'employment_type' => 'Full-time',

@@ -22,7 +22,7 @@ Live: [tubaishat.com](https://tubaishat.com)
 │   │   ├── input.css            Tailwind entry, theme tokens, base layer
 │   │   └── tailwind.min.css     Build output (gitignored, generated)
 │   ├── files/                   CV PDF
-│   ├── images/                  Profile photo, OG image
+│   ├── images/                  OG image
 │   └── js/
 │       └── main.js              Scroll-to-top handler
 ├── components/
@@ -30,7 +30,7 @@ Live: [tubaishat.com](https://tubaishat.com)
 │   ├── footer.php               Copyright + social links
 │   ├── scroll-top.php           Scroll-to-top button + main.js include
 │   └── sections/
-│       ├── hero.php             Name, typed role, bio, CTAs, profile photo
+│       ├── hero.php             Name, typed role, bio, CTAs
 │       ├── about.php            Bio paragraphs, location/education cards, stats
 │       ├── experience.php       Timeline cards (EZ-AD TV, UGC-Gaming.NET)
 │       ├── skills.php           Four categories with official tech logos
