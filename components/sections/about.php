@@ -17,19 +17,19 @@
 					</h3>
 
 					<dl class="grid grid-cols-1 gap-3 text-sm sm:text-base">
-						<div class="flex items-start gap-3 rounded-lg border border-secondary/10 bg-dark/50 p-4">
-							<i class="fas fa-map-marker-alt text-lg text-secondary mt-0.5 shrink-0" aria-hidden="true"></i>
-							<div>
-								<dt class="text-xs text-gray-400">Location</dt>
-								<dd class="text-light"><?= htmlspecialchars($about_section['developer_info']['location']) ?></dd>
-							</div>
+						<div class="rounded-lg border border-secondary/10 bg-dark/50 p-4">
+							<dt class="flex items-center gap-2 text-xs text-gray-400">
+								<i class="fas fa-map-marker-alt text-base text-secondary" aria-hidden="true"></i>
+								<span>Location</span>
+							</dt>
+							<dd class="text-light mt-1"><?= htmlspecialchars($about_section['developer_info']['location']) ?></dd>
 						</div>
-						<div class="flex items-start gap-3 rounded-lg border border-secondary/10 bg-dark/50 p-4">
-							<i class="fas fa-graduation-cap text-lg text-secondary mt-0.5 shrink-0" aria-hidden="true"></i>
-							<div>
-								<dt class="text-xs text-gray-400">Education</dt>
-								<dd class="text-light"><?= htmlspecialchars($about_section['developer_info']['education']) ?></dd>
-							</div>
+						<div class="rounded-lg border border-secondary/10 bg-dark/50 p-4">
+							<dt class="flex items-center gap-2 text-xs text-gray-400">
+								<i class="fas fa-graduation-cap text-base text-secondary" aria-hidden="true"></i>
+								<span>Education</span>
+							</dt>
+							<dd class="text-light mt-1"><?= htmlspecialchars($about_section['developer_info']['education']) ?></dd>
 						</div>
 					</dl>
 
