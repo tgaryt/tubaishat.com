@@ -9,8 +9,8 @@ Live: [tubaishat.com](https://tubaishat.com)
 - PHP 8 (vanilla, server-rendered, no framework)
 - Tailwind CSS v4 (built via `@tailwindcss/cli`)
 - Alpine.js v3 (CDN, for nav menu and typed-text effect)
-- Devicon v2.17.0 (CDN, official tech logos)
-- Font Awesome v6.7.2 (CDN, generic icons)
+- Font Awesome v7.2.0 (npm, inline SVG via PHP helper)
+- Devicon v2.17.0 (npm, inline SVG via PHP helper)
 - Google Fonts: Inter + JetBrains Mono (preconnect + display=swap)
 
 ## Project structure
@@ -22,6 +22,7 @@ Live: [tubaishat.com](https://tubaishat.com)
 │   │   ├── input.css            Tailwind entry, theme tokens, base layer
 │   │   └── tailwind.min.css     Build output (gitignored, generated)
 │   ├── files/                   CV PDF
+│   ├── icons/                   Build output (gitignored, generated from node_modules)
 │   ├── images/                  OG image
 │   └── js/
 │       └── main.js              Scroll-to-top handler
@@ -38,13 +39,17 @@ Live: [tubaishat.com](https://tubaishat.com)
 ├── config/
 │   └── config.php               All site content + constants
 ├── includes/
-│   └── head.php                 Meta, OG, Twitter, JSON-LD, fonts, CDN links
+│   ├── head.php                 Meta, OG, Twitter, JSON-LD, fonts, CDN links
+│   └── icon.php                 Inline SVG icon helper (reads assets/icons/)
+├── scripts/
+│   ├── build-icons.js           Copies needed SVGs from node_modules to assets/icons/
+│   └── icons.json               Icon manifest (local name -> node_modules path)
 ├── favicon.svg                  RT monogram
 ├── manifest.webmanifest         Web App Manifest
 ├── robots.txt                   Allow all + sitemap reference
 ├── sitemap.xml                  Single-page sitemap
 ├── index.php                    Page entry
-└── package.json                 Tailwind CLI build deps
+└── package.json                 Build deps (Tailwind CLI, FontAwesome, Devicon)
 ```
 
 ## Setup
@@ -53,8 +58,12 @@ Live: [tubaishat.com](https://tubaishat.com)
 # Install build dependencies
 npm install
 
-# Build CSS for production (minified)
+# Build CSS + icons (production)
+npm run build
+
+# Or individually:
 npm run build:css
+npm run build:icons
 
 # Watch CSS during development
 npm run watch:css
@@ -63,8 +72,8 @@ npm run watch:css
 ## Deploy
 
 ```bash
-# Build CSS
-npm run build:css
+# Build everything
+npm run build
 
 # Upload via FTP to web root (PHP-FPM serves index.php)
 ```

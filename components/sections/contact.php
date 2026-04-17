@@ -36,7 +36,7 @@
 						   class="group flex items-start gap-4 rounded-lg border border-secondary/10 bg-dark/50 hover:bg-dark/70 hover:border-secondary/40 p-5 transition-all duration-300"
 						   <?php if ($is_external): ?>target="_blank" rel="noopener noreferrer me"<?php endif; ?>>
 							<div class="shrink-0 inline-flex items-center justify-center rounded-xl border border-secondary/30 bg-dark p-3 text-secondary group-hover:bg-secondary/20 transition-all duration-300 group-hover:scale-110">
-								<i class="<?= htmlspecialchars($item['icon']) ?> text-lg sm:text-xl" aria-hidden="true"></i>
+								<?= icon($item['icon'], 'text-lg sm:text-xl') ?>
 							</div>
 							<div class="min-w-0 flex-1">
 								<div class="text-xs text-gray-400"><?= htmlspecialchars($item['type']) ?></div>
@@ -46,7 +46,7 @@
 					<?php else: ?>
 						<div class="flex items-start gap-4 rounded-lg border border-secondary/10 bg-dark/50 p-5">
 							<div class="shrink-0 inline-flex items-center justify-center rounded-xl border border-secondary/30 bg-dark p-3 text-secondary">
-								<i class="<?= htmlspecialchars($item['icon']) ?> text-lg sm:text-xl" aria-hidden="true"></i>
+								<?= icon($item['icon'], 'text-lg sm:text-xl') ?>
 							</div>
 							<div class="min-w-0 flex-1">
 								<div class="text-xs text-gray-400"><?= htmlspecialchars($item['type']) ?></div>
@@ -61,7 +61,7 @@
 				<a href="mailto:<?= htmlspecialchars($contact_info['email']) ?>"
 				   class="inline-flex items-center gap-2 bg-linear-to-r from-secondary to-accent hover:from-accent hover:to-secondary text-primary font-semibold py-3 px-8 rounded-lg shadow-lg shadow-secondary/20 transition-transform duration-300 hover:scale-105 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50">
 					<span><?= htmlspecialchars($contact_section['cta_text']) ?></span>
-					<i class="fas fa-arrow-right" aria-hidden="true"></i>
+					<?= icon('arrow-right') ?>
 				</a>
 			</div>
 		</div>

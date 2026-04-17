@@ -21,7 +21,7 @@
 						<a href="mailto:<?= htmlspecialchars($contact_info['email']) ?>"
 						   aria-label="Email me"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
-							<i class="fas fa-envelope text-lg sm:text-xl" aria-hidden="true"></i>
+							<?= icon('envelope', 'text-lg sm:text-xl') ?>
 						</a>
 					</li>
 					<li>
@@ -30,7 +30,7 @@
 						   rel="noopener noreferrer me"
 						   aria-label="Visit my GitHub profile"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
-							<i class="fab fa-github text-lg sm:text-xl" aria-hidden="true"></i>
+							<?= icon('github', 'text-lg sm:text-xl') ?>
 						</a>
 					</li>
 					<li>
@@ -39,7 +39,7 @@
 						   rel="noopener noreferrer me"
 						   aria-label="Visit my LinkedIn profile"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
-							<i class="fab fa-linkedin text-lg sm:text-xl" aria-hidden="true"></i>
+							<?= icon('linkedin', 'text-lg sm:text-xl') ?>
 						</a>
 					</li>
 					<li>
@@ -48,14 +48,14 @@
 						   rel="noopener noreferrer me"
 						   aria-label="Visit my Instagram profile"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
-							<i class="fab fa-instagram text-lg sm:text-xl" aria-hidden="true"></i>
+							<?= icon('instagram', 'text-lg sm:text-xl') ?>
 						</a>
 					</li>
 					<li>
 						<a href="tel:<?= htmlspecialchars($contact_info['phone']) ?>"
 						   aria-label="Call me"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
-							<i class="fas fa-phone text-lg sm:text-xl" aria-hidden="true"></i>
+							<?= icon('phone', 'text-lg sm:text-xl') ?>
 						</a>
 					</li>
 				</ul>

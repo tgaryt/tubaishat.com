@@ -6,10 +6,14 @@
 	"license": "MIT",
 	"scripts": {
 		"build:css": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/tailwind.min.css --minify",
-		"watch:css": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/tailwind.min.css --watch"
+		"watch:css": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/tailwind.min.css --watch",
+		"build:icons": "node scripts/build-icons.js",
+		"build": "npm run build:css && npm run build:icons"
 	},
 	"devDependencies": {
+		"@fortawesome/fontawesome-free": "7.2.0",
 		"@tailwindcss/cli": "4.2.2",
+		"devicon": "2.17.0",
 		"tailwindcss": "4.2.2"
 	}
 }

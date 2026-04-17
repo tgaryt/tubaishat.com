@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once 'config/config.php';
+require_once 'includes/icon.php';
 ?>
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars(SITE_LANG) ?>" dir="ltr">

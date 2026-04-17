@@ -19,14 +19,14 @@
 					<dl class="grid grid-cols-1 gap-3 text-sm sm:text-base">
 						<div class="rounded-lg border border-secondary/10 bg-dark/50 p-4">
 							<dt class="flex items-center gap-2 text-xs text-gray-400">
-								<i class="fas fa-map-marker-alt text-base text-secondary" aria-hidden="true"></i>
+								<?= icon('location-dot', 'text-base text-secondary') ?>
 								<span>Location</span>
 							</dt>
 							<dd class="text-light mt-1"><?= htmlspecialchars($about_section['developer_info']['location']) ?></dd>
 						</div>
 						<div class="rounded-lg border border-secondary/10 bg-dark/50 p-4">
 							<dt class="flex items-center gap-2 text-xs text-gray-400">
-								<i class="fas fa-graduation-cap text-base text-secondary" aria-hidden="true"></i>
+								<?= icon('graduation-cap', 'text-base text-secondary') ?>
 								<span>Education</span>
 							</dt>
 							<dd class="text-light mt-1"><?= htmlspecialchars($about_section['developer_info']['education']) ?></dd>

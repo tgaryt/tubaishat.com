@@ -18,11 +18,11 @@
 								<div class="flex-1">
 									<div class="flex flex-col flex-wrap gap-2 lg:flex-row lg:items-center lg:gap-3 mb-2">
 										<h3 class="flex items-center gap-2 text-xl lg:text-2xl font-bold text-secondary">
-											<i class="fas fa-briefcase text-lg" aria-hidden="true"></i>
+											<?= icon('briefcase', 'text-lg') ?>
 											<?= htmlspecialchars($job['company']) ?>
 										</h3>
 										<span class="inline-flex items-center gap-1 w-fit bg-secondary/20 text-secondary px-3 py-1 rounded-full text-xs font-medium">
-											<i class="fas fa-map-marker-alt text-[10px]" aria-hidden="true"></i>
+											<?= icon('location-dot', 'text-[10px]') ?>
 											<?= htmlspecialchars($job['location']) ?>
 										</span>
 										<?php if ($job['is_current']): ?>
@@ -36,7 +36,7 @@
 									<p class="mt-1 text-sm text-gray-400"><?= htmlspecialchars($job['employment_type']) ?></p>
 								</div>
 								<div class="flex items-center gap-2 self-start bg-dark/50 border border-secondary/20 px-3 py-1.5 rounded-lg text-sm text-gray-400">
-									<i class="fas fa-calendar text-xs" aria-hidden="true"></i>
+									<?= icon('calendar', 'text-xs') ?>
 									<span>
 										<time datetime="<?= htmlspecialchars($job['datetime_start']) ?>"><?= htmlspecialchars($job['period_start']) ?></time>
 										-
@@ -53,7 +53,7 @@
 						<ul class="space-y-3 text-gray-300">
 							<?php foreach ($job['responsibilities'] as $responsibility): ?>
 								<li class="flex items-start gap-3">
-									<i class="fas fa-circle-check text-secondary mt-0.5 shrink-0" aria-hidden="true"></i>
+									<?= icon('circle-check', 'text-secondary mt-0.5 shrink-0') ?>
 									<span class="text-sm lg:text-base"><?= htmlspecialchars($responsibility) ?></span>
 								</li>
 							<?php endforeach; ?>

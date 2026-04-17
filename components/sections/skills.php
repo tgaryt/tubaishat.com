@@ -16,7 +16,7 @@
 					<article aria-labelledby="<?= htmlspecialchars($cat_id) ?>" class="h-full bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl hover:border-secondary/30 transition-all duration-300">
 						<header class="flex items-center gap-3 mb-6">
 							<div class="inline-flex items-center justify-center rounded-lg border border-secondary/20 bg-secondary/10 p-2.5 text-secondary">
-								<i class="<?= htmlspecialchars($category['icon']) ?>" aria-hidden="true"></i>
+								<?= icon($category['icon']) ?>
 							</div>
 							<h3 id="<?= htmlspecialchars($cat_id) ?>" class="text-lg sm:text-xl font-bold text-secondary">
 								<?= htmlspecialchars($category['title']) ?>
@@ -26,7 +26,7 @@
 						<ul class="flex flex-wrap gap-3">
 							<?php foreach ($category['skills'] as $skill): ?>
 								<li class="inline-flex items-center gap-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/20 rounded-full pl-2 pr-3.5 py-1.5 text-sm font-medium text-light transition-colors duration-200">
-									<i class="<?= htmlspecialchars($skill['icon']) ?> text-lg" aria-hidden="true"></i>
+									<?= icon($skill['icon'], 'text-lg ' . ($skill['icon_class'] ?? '')) ?>
 									<span><?= htmlspecialchars($skill['name']) ?></span>
 								</li>
 							<?php endforeach; ?>

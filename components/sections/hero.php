@@ -4,7 +4,7 @@
 
 	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
 		<div class="inline-flex items-center gap-2 mb-6 bg-linear-to-r from-green-500/20 to-green-400/20 text-green-400 border border-green-400/30 rounded-full py-1.5 sm:py-2 px-4 sm:px-6 text-xs sm:text-sm font-medium animate-pulse-slow backdrop-blur-xs">
-			<i class="fas fa-briefcase text-xs" aria-hidden="true"></i>
+			<?= icon('briefcase', 'text-xs') ?>
 			<span>Currently Employed</span>
 		</div>
 
@@ -39,14 +39,14 @@
 			<a href="#contact"
 			   class="group inline-flex items-center justify-center gap-2 bg-linear-to-r from-secondary to-accent hover:from-accent hover:to-secondary text-primary font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 shadow-lg shadow-secondary/20 hover:scale-105 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50"
 			   aria-label="Contact me via email">
-				<i class="fas fa-envelope group-hover:animate-bounce" aria-hidden="true"></i>
+				<?= icon('envelope', 'group-hover:animate-bounce') ?>
 				<span>Contact Me</span>
 			</a>
 			<a href="<?= htmlspecialchars(CV_PATH) ?>"
 			   download
 			   class="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-linear-to-r from-secondary/10 to-accent/10 text-secondary border border-secondary/40 hover:border-secondary font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 backdrop-blur-xs hover:scale-105 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50"
 			   aria-label="Download my CV">
-				<i class="fas fa-download" aria-hidden="true"></i>
+				<?= icon('download') ?>
 				<span>Download CV</span>
 			</a>
 		</div>
@@ -54,7 +54,7 @@
 		<a href="#about"
 		   aria-label="Scroll to about section"
 		   class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 text-secondary inline-flex items-center justify-center animate-bounce-slow hover:text-accent transition-colors duration-300 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded p-2">
-			<i class="fas fa-chevron-down text-lg sm:text-2xl" aria-hidden="true"></i>
+			<?= icon('chevron-down', 'text-lg sm:text-2xl') ?>
 		</a>
 	</div>
 </section>
