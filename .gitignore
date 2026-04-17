@@ -1,6 +1,7 @@
 node_modules/
 assets/css/tailwind.min.css
 assets/icons/
+assets/js/alpine.min.js
 
 npm-debug.log*
 pnpm-debug.log*

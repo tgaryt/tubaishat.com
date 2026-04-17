@@ -10,10 +10,14 @@ const initScrollToTop = () => {
 	}
 
 	let ticking = false;
+	let isVisible = false;
 
 	const update = () => {
-		const y = window.scrollY || document.documentElement.scrollTop;
-		button.dataset.visible = y > SCROLL_VISIBILITY_THRESHOLD_PX ? 'true' : 'false';
+		const shouldBeVisible = window.scrollY > SCROLL_VISIBILITY_THRESHOLD_PX;
+		if (shouldBeVisible !== isVisible) {
+			isVisible = shouldBeVisible;
+			button.dataset.visible = shouldBeVisible ? 'true' : 'false';
+		}
 		ticking = false;
 	};
 

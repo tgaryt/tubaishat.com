@@ -110,7 +110,6 @@ $json_ld_encoded = json_encode($json_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED
 	<meta name="twitter:image" content="<?= htmlspecialchars($absolute_og_image) ?>">
 	<meta name="twitter:image:alt" content="<?= htmlspecialchars($about_section['developer_info']['name']) ?>, <?= htmlspecialchars($about_section['developer_info']['title']) ?>">
 
-	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -122,7 +121,7 @@ $json_ld_encoded = json_encode($json_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 	</noscript>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.15.0/cdn.min.js" integrity="sha512-4M615JhFufNLsrK5+qpW7oZJ8ooDJlzcUqd/+LVic8e9+0JuoO0KLnIf0NGg3e3tvFxRRdngx1VLtiOwPtYM4A==" defer crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="<?= htmlspecialchars(ASSETS_URL) ?>js/alpine.min.js" defer></script>
 
 	<script type="application/ld+json"><?= $json_ld_encoded ?></script>
 </head>

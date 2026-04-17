@@ -7,8 +7,8 @@ Live: [tubaishat.com](https://tubaishat.com)
 ## Stack
 
 - PHP 8 (vanilla, server-rendered, no framework)
-- Tailwind CSS v4 (built via `@tailwindcss/cli`)
-- Alpine.js v3 (CDN, for nav menu and typed-text effect)
+- Tailwind CSS v4 (npm, built via `@tailwindcss/cli`)
+- Alpine.js v3.15.11 (npm, self-hosted for nav menu and typed-text effect)
 - Font Awesome v7.2.0 (npm, inline SVG via PHP helper)
 - Devicon v2.17.0 (npm, inline SVG via PHP helper)
 - Google Fonts: Inter + JetBrains Mono (preconnect + display=swap)
@@ -25,6 +25,7 @@ Live: [tubaishat.com](https://tubaishat.com)
 │   ├── icons/                   Build output (gitignored, generated from node_modules)
 │   ├── images/                  OG image
 │   └── js/
+│       ├── alpine.min.js        Build output (gitignored, copied from node_modules)
 │       └── main.js              Scroll-to-top handler
 ├── components/
 │   ├── header.php               Sticky nav with Alpine mobile menu
@@ -43,6 +44,7 @@ Live: [tubaishat.com](https://tubaishat.com)
 │   └── icon.php                 Inline SVG icon helper (reads assets/icons/)
 ├── scripts/
 │   ├── build-icons.js           Copies needed SVGs from node_modules to assets/icons/
+│   ├── build-js.js              Copies Alpine.js from node_modules to assets/js/
 │   └── icons.json               Icon manifest (local name -> node_modules path)
 ├── favicon.svg                  RT monogram
 ├── manifest.webmanifest         Web App Manifest
@@ -58,12 +60,13 @@ Live: [tubaishat.com](https://tubaishat.com)
 # Install build dependencies
 npm install
 
-# Build CSS + icons (production)
+# Build everything (CSS + icons + JS)
 npm run build
 
 # Or individually:
 npm run build:css
 npm run build:icons
+npm run build:js
 
 # Watch CSS during development
 npm run watch:css

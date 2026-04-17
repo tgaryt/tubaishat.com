@@ -42,7 +42,6 @@ $about_section = [
 		'title' => 'Full Stack Developer',
 		'location' => 'Jordan',
 		'education' => 'Bachelor of Computer Information Systems (Expected 2026)',
-		'experience' => '3+ years',
 	],
 	'paragraphs' => [
 		'Full Stack Developer with over 3 years of experience building and maintaining web applications end-to-end. I work across the entire stack, writing PHP and Node.js on the backend, JavaScript and TypeScript on the frontend, and designing database schemas with MySQL.',
