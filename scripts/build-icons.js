@@ -5,7 +5,7 @@ const path = require("node:path");
 
 const manifestPath = path.join(__dirname, "icons.json");
 const sourceRoot = path.join(__dirname, "..", "node_modules");
-const destRoot = path.join(__dirname, "..", "assets", "icons");
+const destRoot = path.join(__dirname, "..", "public", "assets", "icons");
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 
@@ -38,7 +38,7 @@ for (const [name, sourcePath] of Object.entries(manifest)) {
 	written += 1;
 }
 
-console.log("Wrote " + written + " icons to assets/icons/");
+console.log("Wrote " + written + " icons to public/assets/icons/");
 
 if (missing.length > 0) {
 	console.error("MISSING " + missing.length + " icons:");

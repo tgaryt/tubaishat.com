@@ -1,0 +1,39 @@
+{
+	"id": "/",
+	"name": "Rayyan Tubaishat | Full Stack Developer",
+	"short_name": "Rayyan Tubaishat",
+	"description": "Full Stack Developer with 3+ years of experience building modern web applications using PHP, Node.js, JavaScript, TypeScript, and MySQL.",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"theme_color": "#0ea5e9",
+	"background_color": "#020617",
+	"lang": "en-US",
+	"dir": "ltr",
+	"icons": [
+		{
+			"src": "/favicon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any"
+		},
+		{
+			"src": "/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icon-512-maskable.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}

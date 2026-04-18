@@ -6,91 +6,26 @@ Live: [tubaishat.com](https://tubaishat.com)
 
 ## Stack
 
-- PHP 8 (vanilla, server-rendered, no framework)
-- Tailwind CSS v4 (npm, built via `@tailwindcss/cli`)
-- Alpine.js v3.15.11 (npm, self-hosted for nav menu and typed-text effect)
-- Font Awesome v7.2.0 (npm, inline SVG via PHP helper)
-- Devicon v2.17.0 (npm, inline SVG via PHP helper)
-- Google Fonts: Inter + JetBrains Mono (preconnect + display=swap)
-
-## Project structure
-
-```
-.
-├── assets/
-│   ├── css/
-│   │   ├── input.css            Tailwind entry, theme tokens, base layer
-│   │   └── tailwind.min.css     Build output (gitignored, generated)
-│   ├── files/                   CV PDF
-│   ├── icons/                   Build output (gitignored, generated from node_modules)
-│   ├── images/                  OG image
-│   └── js/
-│       ├── alpine.min.js        Build output (gitignored, copied from node_modules)
-│       └── main.js              Scroll-to-top handler
-├── components/
-│   ├── header.php               Sticky nav with Alpine mobile menu
-│   ├── footer.php               Copyright + social links
-│   ├── scroll-top.php           Scroll-to-top button + main.js include
-│   └── sections/
-│       ├── hero.php             Name, typed role, bio, CTAs
-│       ├── about.php            Bio paragraphs, location/education cards, stats
-│       ├── experience.php       Timeline cards (EZ-AD TV, UGC-Gaming.NET)
-│       ├── skills.php           Four categories with official tech logos
-│       └── contact.php          Contact cards grid + mailto CTA
-├── config/
-│   └── config.php               All site content + constants
-├── includes/
-│   ├── head.php                 Meta, OG, Twitter, JSON-LD, fonts, CDN links
-│   └── icon.php                 Inline SVG icon helper (reads assets/icons/)
-├── scripts/
-│   ├── build-icons.js           Copies needed SVGs from node_modules to assets/icons/
-│   ├── build-js.js              Copies Alpine.js from node_modules to assets/js/
-│   └── icons.json               Icon manifest (local name -> node_modules path)
-├── favicon.svg                  RT monogram
-├── manifest.webmanifest         Web App Manifest
-├── robots.txt                   Allow all + sitemap reference
-├── sitemap.xml                  Single-page sitemap
-├── index.php                    Page entry
-└── package.json                 Build deps (Tailwind CLI, FontAwesome, Devicon)
-```
+- PHP 8.4+ with Composer (PSR-4 autoload under `Tubaishat\` namespace)
+- Front-controller + simple router pattern (no framework)
+- Mailgun PHP SDK 4.4.0 for the contact form
+- Tailwind CSS v4.2.2 (npm, built via `@tailwindcss/cli`)
+- Vanilla JavaScript (no runtime framework)
+- Font Awesome v7.2.0 + Devicon v2.17.0 inline SVG from npm
+- sharp v0.34.5 for PWA icon generation
+- Google Fonts Inter + JetBrains Mono on CDN (Google's current official snippet)
 
 ## Setup
 
 ```bash
-# Install build dependencies
+composer install
 npm install
-
-# Build everything (CSS + icons + JS)
 npm run build
-
-# Or individually:
-npm run build:css
-npm run build:icons
-npm run build:js
-
-# Watch CSS during development
-npm run watch:css
 ```
-
-## Deploy
-
-```bash
-# Build everything
-npm run build
-
-# Upload via FTP to web root (PHP-FPM serves index.php)
-```
-
-## SEO
-
-- Canonical URL on every page
-- Open Graph + Twitter Cards complete per each platform's spec
-- ProfilePage + Person + WebSite JSON-LD graph (verified against Google's Rich Results Test before deploy)
-- XML sitemap at `/sitemap.xml`, referenced from `/robots.txt`
 
 ## Content updates
 
-All copy and structure live in `config/config.php`. Edit the arrays there, then refresh.
+All copy lives in `config/site.php`. Edit the arrays there and refresh. Every section is labeled with a banner comment showing what it drives.
 
 ## Contact
 

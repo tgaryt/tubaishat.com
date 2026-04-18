@@ -1,0 +1,34 @@
+{
+	"name": "tgaryt/tubaishat.com",
+	"description": "Personal portfolio for Rayyan Tubaishat - Full Stack Developer.",
+	"type": "project",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Rayyan Tubaishat",
+			"email": "ba8lawa2023@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=8.4.1",
+		"mailgun/mailgun-php": "4.4.0",
+		"symfony/http-client": "8.0.8",
+		"nyholm/psr7": "1.8.2",
+		"vlucas/phpdotenv": "5.6.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Tubaishat\\": "src/"
+		}
+	},
+	"config": {
+		"sort-packages": true,
+		"optimize-autoloader": true,
+		"allow-plugins": {
+			"php-http/discovery": true,
+			"symfony/runtime": false
+		}
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}
