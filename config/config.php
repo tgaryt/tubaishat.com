@@ -148,7 +148,6 @@ $skills_section = [
 
 $contact_section = [
 	'title' => "Let's <span class=\"text-secondary\">Talk</span>",
-	'subtitle' => 'Get In Touch',
 	'intro' => 'Open to new opportunities and collaborations. Pick any channel below.',
 	'contact_items' => [
 		[
