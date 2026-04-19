@@ -119,7 +119,6 @@ $json_ld_encoded = str_replace('</', '<\/', $json_ld_encoded);
 	<meta property="og:description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 	<meta property="og:url" content="<?= htmlspecialchars($canonical_url, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 	<meta property="og:image" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
-	<meta property="og:image:secure_url" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 	<meta property="og:image:alt" content="<?= htmlspecialchars($about['developer_info']['name'] . ', ' . $about['developer_info']['title'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:width" content="1200">

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Tubaishat\Support;
 
+use RuntimeException;
+
 final class View
 {
 	/**
@@ -12,7 +14,7 @@ final class View
 	{
 		$templatePath = dirname(__DIR__, 2) . '/templates/' . $template . '.php';
 		if (!is_file($templatePath)) {
-			throw new \RuntimeException('Template not found: ' . $template);
+			throw new RuntimeException('Template not found: ' . $template);
 		}
 
 		extract($data, EXTR_SKIP);

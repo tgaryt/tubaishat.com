@@ -17,13 +17,19 @@ Live: [tubaishat.com](https://tubaishat.com)
 
 ## Setup
 
+Local development (any OS):
+
 ```bash
 composer install
 npm install
 npm run build
+```
 
+Production server (Linux, once per fresh clone):
+
+```bash
 # Make storage/ writable by PHP-FPM (sessions + rate-limit state).
-# Required once per fresh clone; OWASP recommends 0700 for session dirs.
+# OWASP recommends 0700 for session directories.
 sudo chown -R www-data:www-data storage/
 sudo chmod -R 700 storage/
 ```

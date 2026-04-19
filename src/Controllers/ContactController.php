@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tubaishat\Controllers;
 
+use Throwable;
 use Tubaishat\Services\MailgunService;
 use Tubaishat\Support\Csrf;
 use Tubaishat\Support\RateLimiter;
@@ -55,7 +56,7 @@ final class ContactController
 
 		try {
 			(new MailgunService())->sendContactForm($validator->validated());
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 			error_log('[contact-form] Mailgun send failed: ' . $e->getMessage());
 			http_response_code(500);
 			echo json_encode([

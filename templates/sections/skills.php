@@ -18,15 +18,15 @@ $title_parts = explode($skills['title_highlight'], $skills['title_plain'], 2);
 			<?php foreach ($skills['categories'] as $index => $category): ?>
 				<?php $cat_id = 'skill-cat-' . $index; ?>
 				<li>
-					<article aria-labelledby="<?= htmlspecialchars($cat_id, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>" class="h-full bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl hover:border-secondary/30 transition-all duration-300">
-						<header class="flex items-center gap-3 mb-6">
+					<div aria-labelledby="<?= htmlspecialchars($cat_id, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>" class="h-full bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl hover:border-secondary/30 transition-all duration-300">
+						<div class="flex items-center gap-3 mb-6">
 							<div class="inline-flex items-center justify-center rounded-lg border border-secondary/20 bg-secondary/10 p-2.5 text-secondary">
 								<?= Icon::render($category['icon']) ?>
 							</div>
 							<h3 id="<?= htmlspecialchars($cat_id, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-lg sm:text-xl font-bold text-secondary">
 								<?= htmlspecialchars($category['title'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>
 							</h3>
-						</header>
+						</div>
 
 						<ul class="flex flex-wrap gap-3">
 							<?php foreach ($category['skills'] as $skill): ?>
@@ -36,7 +36,7 @@ $title_parts = explode($skills['title_highlight'], $skills['title_plain'], 2);
 								</li>
 							<?php endforeach; ?>
 						</ul>
-					</article>
+					</div>
 				</li>
 			<?php endforeach; ?>
 		</ul>

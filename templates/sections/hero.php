@@ -12,8 +12,8 @@ foreach ($experience['jobs'] as $job) {
 }
 ?>
 <section id="home" aria-labelledby="hero-heading" class="min-h-dvh relative overflow-hidden flex items-center pt-20 sm:pt-24 md:pt-32">
-	<div class="pointer-events-none absolute top-16 sm:top-20 right-1/6 sm:right-1/4 w-60 sm:w-80 lg:w-96 h-60 sm:h-80 lg:h-96 bg-secondary opacity-10 rounded-full blur-3xl -z-10 animate-pulse-slow" aria-hidden="true"></div>
-	<div class="pointer-events-none absolute bottom-16 sm:bottom-20 left-1/6 sm:left-1/4 w-48 sm:w-72 lg:w-80 h-48 sm:h-72 lg:h-80 bg-accent opacity-5 rounded-full blur-3xl -z-10 animate-pulse-slow [animation-delay:500ms]" aria-hidden="true"></div>
+	<div class="pointer-events-none absolute top-16 sm:top-20 right-[16.6667%] sm:right-1/4 w-60 sm:w-80 lg:w-96 h-60 sm:h-80 lg:h-96 bg-secondary opacity-10 rounded-full blur-3xl -z-10 animate-pulse-slow" aria-hidden="true"></div>
+	<div class="pointer-events-none absolute bottom-16 sm:bottom-20 left-[16.6667%] sm:left-1/4 w-48 sm:w-72 lg:w-80 h-48 sm:h-72 lg:h-80 bg-accent opacity-5 rounded-full blur-3xl -z-10 animate-pulse-slow [animation-delay:500ms]" aria-hidden="true"></div>
 
 	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
 		<?php if ($has_current_job): ?>
@@ -47,7 +47,7 @@ foreach ($experience['jobs'] as $job) {
 			</a>
 			<a href="<?= htmlspecialchars($meta['cv_path'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 			   download
-			   class="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-linear-to-r from-secondary/10 to-accent/10 text-secondary border border-secondary/40 hover:border-secondary font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 backdrop-blur-xs hover:scale-105 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50"
+			   class="inline-flex items-center justify-center gap-2 bg-linear-to-r from-secondary/0 to-accent/0 hover:from-secondary/10 hover:to-accent/10 text-secondary border border-secondary/40 hover:border-secondary font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 backdrop-blur-xs hover:scale-105 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50"
 			   aria-label="Download my CV">
 				<?= Icon::render('download') ?>
 				<span><?= htmlspecialchars($hero['download_cv_cta'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></span>

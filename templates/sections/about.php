@@ -14,7 +14,7 @@ $title_parts = explode($about['title_highlight'], $about['title_plain'], 2);
 			<div class="w-16 sm:w-20 h-1 bg-linear-to-r from-secondary to-accent mx-auto mt-3 sm:mt-4" aria-hidden="true"></div>
 		</header>
 
-		<article class="relative overflow-hidden bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl">
+		<div class="relative overflow-hidden bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl">
 			<div class="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-10 sm:gap-12 items-start">
 				<div class="space-y-4">
 					<h3 class="text-xl sm:text-2xl font-bold text-secondary">
@@ -56,6 +56,6 @@ $title_parts = explode($about['title_highlight'], $about['title_plain'], 2);
 					<?php endforeach; ?>
 				</div>
 			</div>
-		</article>
+		</div>
 	</div>
 </section>

@@ -20,7 +20,7 @@ $fields = $form['fields'];
 		</header>
 
 		<div class="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-6 lg:gap-8">
-			<article aria-labelledby="contact-channels-heading" class="bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl">
+			<div aria-labelledby="contact-channels-heading" class="bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl">
 				<h3 id="contact-channels-heading" class="text-xl sm:text-2xl font-bold text-secondary mb-6"><?= htmlspecialchars($contact['channels_heading'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></h3>
 				<address class="flex flex-col gap-4 not-italic">
 					<?php foreach ($contact['contact_items'] as $item):
@@ -65,9 +65,9 @@ $fields = $form['fields'];
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</address>
-			</article>
+			</div>
 
-			<article aria-labelledby="contact-form-heading" class="bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl">
+			<div aria-labelledby="contact-form-heading" class="bg-dark/40 backdrop-blur-xs border border-secondary/20 rounded-xl p-6 sm:p-8 shadow-xl">
 				<h3 id="contact-form-heading" class="text-xl sm:text-2xl font-bold text-secondary mb-2"><?= htmlspecialchars($contact['form_heading'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></h3>
 				<p class="text-sm text-gray-400 mb-6"><?= htmlspecialchars($contact['form_subtitle'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></p>
 
@@ -187,7 +187,7 @@ $fields = $form['fields'];
 						<p id="contactStatus" aria-live="polite" class="text-sm text-gray-300 data-[status=error]:text-red-400 data-[status=success]:text-green-400"></p>
 					</div>
 				</form>
-			</article>
+			</div>
 		</div>
 	</div>
 </section>
