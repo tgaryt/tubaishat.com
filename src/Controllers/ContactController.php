@@ -10,6 +10,8 @@ use Tubaishat\Support\Validator;
 
 final class ContactController
 {
+	private const JSON_FLAGS = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR;
+
 	/**
 	 * Handle contact form POST: honeypot, CSRF check, rate-limit, validate, send via Mailgun.
 	 */
@@ -19,7 +21,7 @@ final class ContactController
 		header('X-Content-Type-Options: nosniff');
 
 		if (!empty($_POST['website'])) {
-			echo json_encode(['ok' => true]);
+			echo json_encode(['ok' => true], self::JSON_FLAGS);
 			return;
 		}
 
@@ -29,7 +31,7 @@ final class ContactController
 			echo json_encode([
 				'ok' => false,
 				'error' => 'Your session has expired. Please refresh the page and send the message again.',
-			]);
+			], self::JSON_FLAGS);
 			return;
 		}
 
@@ -39,7 +41,7 @@ final class ContactController
 			echo json_encode([
 				'ok' => false,
 				'error' => 'You have reached the submission limit for this hour. Please try again later.',
-			]);
+			], self::JSON_FLAGS);
 			return;
 		}
 
@@ -47,7 +49,7 @@ final class ContactController
 		$errors = $validator->validateContactForm();
 		if (!empty($errors)) {
 			http_response_code(422);
-			echo json_encode(['ok' => false, 'errors' => $errors]);
+			echo json_encode(['ok' => false, 'errors' => $errors], self::JSON_FLAGS);
 			return;
 		}
 
@@ -59,7 +61,7 @@ final class ContactController
 			echo json_encode([
 				'ok' => false,
 				'error' => 'The message could not be sent at this time. Please email ba8lawa2023@gmail.com directly.',
-			]);
+			], self::JSON_FLAGS);
 			return;
 		}
 
@@ -68,26 +70,19 @@ final class ContactController
 		echo json_encode([
 			'ok' => true,
 			'csrf_token' => Csrf::token(),
-		]);
+		], self::JSON_FLAGS);
 	}
 
 	/**
-	 * Resolve the client IP, preferring Cloudflare's forwarded header when behind Cloudflare.
+	 * Resolve the client IP. Trust only the value nginx placed into REMOTE_ADDR; the nginx realip
+	 * module already replaces it with the CF-Connecting-IP value for requests from Cloudflare ranges
+	 * and leaves it as the true peer address otherwise, which prevents direct-hit header spoofing.
 	 */
 	private function clientIp(): string
 	{
-		$candidates = [
-			$_SERVER['HTTP_CF_CONNECTING_IP'] ?? null,
-			$_SERVER['REMOTE_ADDR'] ?? null,
-		];
-
-		foreach ($candidates as $candidate) {
-			if ($candidate === null) {
-				continue;
-			}
-			if (filter_var($candidate, FILTER_VALIDATE_IP)) {
-				return $candidate;
-			}
+		$ip = $_SERVER['REMOTE_ADDR'] ?? '';
+		if ($ip !== '' && filter_var($ip, FILTER_VALIDATE_IP)) {
+			return $ip;
 		}
 
 		return 'unknown';

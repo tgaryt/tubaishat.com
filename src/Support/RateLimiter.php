@@ -17,45 +17,48 @@ final class RateLimiter
 
 	/**
 	 * Record an attempt for the given client IP and return whether it is within the per-window quota.
+	 * Fails closed: if the storage layer is unavailable, the caller is blocked rather than allowed.
 	 */
 	public function allow(string $ip): bool
 	{
 		$file = $this->storagePath . '/' . hash('sha256', $ip) . '.json';
 
-		$handle = @fopen($file, 'c+');
+		$handle = fopen($file, 'c+');
 		if ($handle === false) {
-			error_log('[rate-limiter] Unable to open ' . $file);
-			return true;
+			error_log('[rate-limiter] Unable to open rate-limit file: ' . $file);
+			return false;
 		}
 
 		if (!flock($handle, LOCK_EX)) {
 			fclose($handle);
-			return true;
-		}
-
-		$contents = stream_get_contents($handle);
-		$now = time();
-		$state = ($contents !== '' && $contents !== false) ? json_decode($contents, true) : null;
-
-		if (!is_array($state) || $now - ($state['window_start'] ?? 0) >= self::WINDOW_SECONDS) {
-			$state = ['count' => 0, 'window_start' => $now];
-		}
-
-		if ($state['count'] >= self::MAX_REQUESTS_PER_WINDOW) {
-			flock($handle, LOCK_UN);
-			fclose($handle);
+			error_log('[rate-limiter] Unable to acquire lock on: ' . $file);
 			return false;
 		}
 
-		$state['count']++;
+		try {
+			$contents = stream_get_contents($handle);
+			$now = time();
+			$state = ($contents !== '' && $contents !== false) ? json_decode($contents, true) : null;
 
-		ftruncate($handle, 0);
-		rewind($handle);
-		fwrite($handle, json_encode($state));
-		fflush($handle);
-		flock($handle, LOCK_UN);
-		fclose($handle);
+			if (!is_array($state) || $now - ($state['window_start'] ?? 0) >= self::WINDOW_SECONDS) {
+				$state = ['count' => 0, 'window_start' => $now];
+			}
 
-		return true;
+			if ($state['count'] >= self::MAX_REQUESTS_PER_WINDOW) {
+				return false;
+			}
+
+			$state['count']++;
+
+			ftruncate($handle, 0);
+			rewind($handle);
+			fwrite($handle, json_encode($state, JSON_THROW_ON_ERROR));
+			fflush($handle);
+
+			return true;
+		} finally {
+			flock($handle, LOCK_UN);
+			fclose($handle);
+		}
 	}
 }

@@ -15,13 +15,14 @@ public/assets/css/tailwind.min.css
 public/assets/icons/
 
 # PWA raster icons generated from public/favicon.svg by scripts/build-favicons.js.
-public/favicon-32.png
+public/favicon-48.png
 public/icon-192.png
 public/icon-512.png
+public/icon-192-maskable.png
 public/icon-512-maskable.png
 public/apple-touch-icon.png
 
-# Sitemap regenerated with today's date by scripts/build-sitemap.js.
+# Sitemap regenerated from config/site.php mtime by scripts/build-sitemap.js.
 public/sitemap.xml
 
 # ============================================================================

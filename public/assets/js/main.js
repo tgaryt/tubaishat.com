@@ -2,7 +2,7 @@ const SCROLL_VISIBILITY_THRESHOLD_PX = 300;
 const TYPEWRITER_DEFAULT_DELAY_MS = 45;
 
 /**
- * Toggle the scroll-to-top button's visibility and tab-order via the data-visible attribute + hidden.
+ * Toggle the scroll-to-top button's visibility and tab-order via the data-visible attribute and hidden flag.
  */
 const initScrollToTop = () => {
 	const button = document.getElementById('scrollToTop');
@@ -18,11 +18,7 @@ const initScrollToTop = () => {
 		if (shouldBeVisible !== isVisible) {
 			isVisible = shouldBeVisible;
 			button.dataset.visible = shouldBeVisible ? 'true' : 'false';
-			if (shouldBeVisible) {
-				button.removeAttribute('hidden');
-			} else {
-				button.setAttribute('hidden', '');
-			}
+			button.toggleAttribute('hidden', !shouldBeVisible);
 		}
 		ticking = false;
 	};
@@ -44,7 +40,7 @@ const initScrollToTop = () => {
 };
 
 /**
- * Mobile navigation disclosure pattern with aria-expanded + inert + Escape-to-close.
+ * Mobile navigation disclosure pattern with aria-expanded, inert panel, and Escape-to-close.
  */
 const initMobileNav = () => {
 	const toggle = document.getElementById('mobileNavToggle');
@@ -59,15 +55,9 @@ const initMobileNav = () => {
 	const setOpen = (open) => {
 		toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 		panel.dataset.state = open ? 'open' : 'closed';
-		if (open) {
-			panel.removeAttribute('inert');
-			openIcon?.setAttribute('hidden', '');
-			closeIcon?.removeAttribute('hidden');
-		} else {
-			panel.setAttribute('inert', '');
-			openIcon?.removeAttribute('hidden');
-			closeIcon?.setAttribute('hidden', '');
-		}
+		panel.toggleAttribute('inert', !open);
+		openIcon?.toggleAttribute('hidden', open);
+		closeIcon?.toggleAttribute('hidden', !open);
 	};
 
 	toggle.addEventListener('click', () => {
@@ -91,6 +81,7 @@ const initMobileNav = () => {
 
 /**
  * Progressive typewriter effect for the hero role. Skipped entirely when prefers-reduced-motion is set.
+ * Uses a single textContent assignment per tick to avoid the read/modify/write anti-pattern.
  */
 const initTypewriter = () => {
 	const element = document.getElementById('heroTypewriter');
@@ -104,11 +95,13 @@ const initTypewriter = () => {
 	const text = element.dataset.text ?? element.textContent ?? '';
 	const delay = Number.parseInt(element.dataset.delay ?? String(TYPEWRITER_DEFAULT_DELAY_MS), 10);
 
+	let current = '';
 	element.textContent = '';
 	let i = 0;
 	const tick = () => {
 		if (i < text.length) {
-			element.textContent += text[i];
+			current += text[i];
+			element.textContent = current;
 			i++;
 			setTimeout(tick, delay);
 		}

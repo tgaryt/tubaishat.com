@@ -5,6 +5,8 @@ namespace Tubaishat\Support;
 
 final class Icon
 {
+	private const ESCAPE_FLAGS = ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE;
+
 	/**
 	 * Per-request cache so each icon file is only read from disk once, even when rendered many times.
 	 */
@@ -32,11 +34,11 @@ final class Icon
 		}
 
 		$attrs = ' width="1em" height="1em"';
-		$attrs .= ' class="' . htmlspecialchars($fullClass, ENT_QUOTES, 'UTF-8') . '"';
+		$attrs .= ' class="' . htmlspecialchars($fullClass, self::ESCAPE_FLAGS, 'UTF-8') . '"';
 		$attrs .= ' focusable="false"';
 		if ($title !== null) {
 			$attrs .= ' role="img"';
-			$attrs .= ' aria-label="' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '"';
+			$attrs .= ' aria-label="' . htmlspecialchars($title, self::ESCAPE_FLAGS, 'UTF-8') . '"';
 		} else {
 			$attrs .= ' aria-hidden="true"';
 		}

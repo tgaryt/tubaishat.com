@@ -15,6 +15,12 @@
 		statusRegion.dataset.status = kind;
 	};
 
+	const setSubmitting = (submitting) => {
+		if (submitButton) {
+			submitButton.disabled = submitting;
+		}
+	};
+
 	const clearFieldErrors = () => {
 		form.querySelectorAll('[data-error]').forEach((el) => {
 			el.textContent = '';
@@ -26,8 +32,9 @@
 
 	const showFieldErrors = (errors) => {
 		for (const [field, message] of Object.entries(errors)) {
-			const errorEl = form.querySelector(`[data-error="${field}"]`);
-			const input = form.querySelector(`[name="${field}"]`);
+			const escaped = CSS.escape(field);
+			const errorEl = form.querySelector(`[data-error="${escaped}"]`);
+			const input = form.querySelector(`[name="${escaped}"]`);
 			if (errorEl) {
 				errorEl.textContent = message;
 			}
@@ -41,7 +48,7 @@
 		event.preventDefault();
 		clearFieldErrors();
 		setStatus('Sending your message...', 'pending');
-		submitButton.disabled = true;
+		setSubmitting(true);
 
 		const formData = new FormData(form);
 
@@ -75,7 +82,7 @@
 		} catch (_error) {
 			setStatus('Unable to reach the server. Please check your connection and try again.', 'error');
 		} finally {
-			submitButton.disabled = false;
+			setSubmitting(false);
 		}
 	});
 })();

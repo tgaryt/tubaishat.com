@@ -10,7 +10,7 @@ $title_parts = explode($about['title_highlight'], $about['title_plain'], 2);
 
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<header class="text-center mb-12 sm:mb-16">
-			<h2 id="about-heading" class="text-3xl sm:text-4xl md:text-5xl font-bold inline-block"><?= htmlspecialchars($title_parts[0] ?? '', ENT_QUOTES, 'UTF-8') ?><span class="text-secondary"><?= htmlspecialchars($about['title_highlight'], ENT_QUOTES, 'UTF-8') ?></span><?= htmlspecialchars($title_parts[1] ?? '', ENT_QUOTES, 'UTF-8') ?></h2>
+			<h2 id="about-heading" class="text-3xl sm:text-4xl md:text-5xl font-bold inline-block"><?= htmlspecialchars($title_parts[0] ?? '', ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?><span class="text-secondary"><?= htmlspecialchars($about['title_highlight'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></span><?= htmlspecialchars($title_parts[1] ?? '', ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></h2>
 			<div class="w-16 sm:w-20 h-1 bg-linear-to-r from-secondary to-accent mx-auto mt-3 sm:mt-4" aria-hidden="true"></div>
 		</header>
 
@@ -18,7 +18,7 @@ $title_parts = explode($about['title_highlight'], $about['title_plain'], 2);
 			<div class="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-10 sm:gap-12 items-start">
 				<div class="space-y-4">
 					<h3 class="text-xl sm:text-2xl font-bold text-secondary">
-						<?= htmlspecialchars($about['subtitle'], ENT_QUOTES, 'UTF-8') ?>
+						<?= htmlspecialchars($about['subtitle'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>
 					</h3>
 
 					<dl class="grid grid-cols-1 gap-3 text-sm sm:text-base">
@@ -27,22 +27,22 @@ $title_parts = explode($about['title_highlight'], $about['title_plain'], 2);
 								<?= Icon::render('location-dot', 'text-base text-secondary') ?>
 								<span>Location</span>
 							</dt>
-							<dd class="text-light mt-1"><?= htmlspecialchars($about['developer_info']['location'], ENT_QUOTES, 'UTF-8') ?></dd>
+							<dd class="text-light mt-1"><?= htmlspecialchars($about['developer_info']['location'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></dd>
 						</div>
 						<div class="rounded-lg border border-secondary/10 bg-dark/50 p-4">
 							<dt class="flex items-center gap-2 text-xs text-gray-400">
 								<?= Icon::render('graduation-cap', 'text-base text-secondary') ?>
 								<span>Education</span>
 							</dt>
-							<dd class="text-light mt-1"><?= htmlspecialchars($about['developer_info']['education'], ENT_QUOTES, 'UTF-8') ?></dd>
+							<dd class="text-light mt-1"><?= htmlspecialchars($about['developer_info']['education'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></dd>
 						</div>
 					</dl>
 
 					<div class="grid grid-cols-2 gap-4 pt-2">
 						<?php foreach ($about['stats'] as $stat): ?>
 							<div class="rounded-lg border border-secondary/10 bg-dark/50 p-4 text-center">
-								<div class="text-2xl font-bold text-secondary"><?= htmlspecialchars($stat['value'], ENT_QUOTES, 'UTF-8') ?></div>
-								<div class="text-xs sm:text-sm text-gray-400"><?= htmlspecialchars($stat['label'], ENT_QUOTES, 'UTF-8') ?></div>
+								<div class="text-2xl font-bold text-secondary"><?= htmlspecialchars($stat['value'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></div>
+								<div class="text-xs sm:text-sm text-gray-400"><?= htmlspecialchars($stat['label'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></div>
 							</div>
 						<?php endforeach; ?>
 					</div>
@@ -51,7 +51,7 @@ $title_parts = explode($about['title_highlight'], $about['title_plain'], 2);
 				<div class="space-y-4 sm:space-y-5 text-gray-200">
 					<?php foreach ($about['paragraphs'] as $paragraph): ?>
 						<p class="text-base sm:text-lg leading-relaxed">
-							<?= htmlspecialchars($paragraph, ENT_QUOTES, 'UTF-8') ?>
+							<?= htmlspecialchars($paragraph, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>
 						</p>
 					<?php endforeach; ?>
 				</div>

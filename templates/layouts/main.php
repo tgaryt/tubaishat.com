@@ -13,7 +13,7 @@ $footer = $site['footer'];
 $navigation_links = $site['navigation_links'];
 $hero = $site['hero'];
 
-$canonical_url = $meta['url'];
+$canonical_url = $meta['url'] . '/';
 $absolute_og_image = $meta['url'] . $meta['og_image'];
 $person_id = $meta['url'] . '/#person';
 $profile_page_id = $meta['url'] . '/#profilepage';
@@ -91,48 +91,48 @@ $json_ld = [
 	],
 ];
 
-$json_ld_encoded = json_encode($json_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$json_ld_encoded = json_encode($json_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 $json_ld_encoded = str_replace('</', '<\/', $json_ld_encoded);
 ?>
 <!DOCTYPE html>
-<html lang="<?= htmlspecialchars($meta['lang'], ENT_QUOTES, 'UTF-8') ?>" dir="ltr">
+<html lang="<?= htmlspecialchars($meta['lang'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>" dir="ltr">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="color-scheme" content="dark">
-	<meta name="theme-color" content="<?= htmlspecialchars($meta['theme_color'], ENT_QUOTES, 'UTF-8') ?>">
+	<meta name="theme-color" content="<?= htmlspecialchars($meta['theme_color'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 	<meta name="format-detection" content="telephone=no">
 
-	<title><?= htmlspecialchars($meta['name'], ENT_QUOTES, 'UTF-8') ?></title>
-	<meta name="description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES, 'UTF-8') ?>">
+	<title><?= htmlspecialchars($meta['name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></title>
+	<meta name="description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 
-	<link rel="canonical" href="<?= htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8') ?>">
+	<link rel="canonical" href="<?= htmlspecialchars($canonical_url, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<link rel="manifest" href="/manifest.webmanifest">
 
 	<meta property="og:type" content="profile">
-	<meta property="og:site_name" content="<?= htmlspecialchars($meta['name'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="og:locale" content="<?= htmlspecialchars($meta['locale'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="og:title" content="<?= htmlspecialchars($meta['name'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="og:description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="og:url" content="<?= htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="og:image" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="og:image:secure_url" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="og:image:alt" content="<?= htmlspecialchars($about['developer_info']['name'] . ', ' . $about['developer_info']['title'], ENT_QUOTES, 'UTF-8') ?>">
+	<meta property="og:site_name" content="<?= htmlspecialchars($meta['name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="og:locale" content="<?= htmlspecialchars($meta['locale'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="og:title" content="<?= htmlspecialchars($meta['name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="og:description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="og:url" content="<?= htmlspecialchars($canonical_url, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="og:image" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="og:image:secure_url" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="og:image:alt" content="<?= htmlspecialchars($about['developer_info']['name'] . ', ' . $about['developer_info']['title'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="630">
-	<meta property="profile:first_name" content="<?= htmlspecialchars($about['developer_info']['first_name'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="profile:last_name" content="<?= htmlspecialchars($about['developer_info']['last_name'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta property="profile:username" content="<?= htmlspecialchars($contact_info['github_username'], ENT_QUOTES, 'UTF-8') ?>">
+	<meta property="profile:first_name" content="<?= htmlspecialchars($about['developer_info']['first_name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="profile:last_name" content="<?= htmlspecialchars($about['developer_info']['last_name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta property="profile:username" content="<?= htmlspecialchars($contact_info['github_username'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="<?= htmlspecialchars($meta['name'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta name="twitter:description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES, 'UTF-8') ?>">
-	<meta name="twitter:image" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES, 'UTF-8') ?>">
-	<meta name="twitter:image:alt" content="<?= htmlspecialchars($about['developer_info']['name'] . ', ' . $about['developer_info']['title'], ENT_QUOTES, 'UTF-8') ?>">
+	<meta name="twitter:title" content="<?= htmlspecialchars($meta['name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta name="twitter:description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta name="twitter:image" content="<?= htmlspecialchars($absolute_og_image, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
+	<meta name="twitter:image:alt" content="<?= htmlspecialchars($about['developer_info']['name'] . ', ' . $about['developer_info']['title'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,7 +142,7 @@ $json_ld_encoded = str_replace('</', '<\/', $json_ld_encoded);
 
 	<script src="/assets/js/main.js" defer></script>
 
-	<script type="application/ld+json" nonce="<?= htmlspecialchars(Csp::nonce(), ENT_QUOTES, 'UTF-8') ?>"><?= $json_ld_encoded ?></script>
+	<script type="application/ld+json" nonce="<?= htmlspecialchars(Csp::nonce(), ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"><?= $json_ld_encoded ?></script>
 </head>
 <body>
 	<a href="#main" class="skip-link">Skip to main content</a>

@@ -28,9 +28,6 @@ ini_set('log_errors', '1');
 
 ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');
-ini_set('session.cookie_secure', '1');
-ini_set('session.cookie_httponly', '1');
-ini_set('session.cookie_samesite', 'Strict');
 
 $sessionPath = $projectRoot . '/storage/sessions';
 if (!is_dir($sessionPath) || !is_writable($sessionPath)) {

@@ -43,7 +43,7 @@
 		background: linear-gradient(to bottom, var(--color-dark), var(--color-primary)) no-repeat fixed;
 		color: var(--color-light);
 		font-family: var(--font-sans);
-		min-height: 100vh;
+		min-height: 100dvh;
 	}
 
 	::selection {

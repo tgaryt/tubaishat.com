@@ -15,24 +15,24 @@ $current_year = date('Y');
 					   aria-label="Back to top">
 						&lt;RT/&gt;
 					</a>
-					<span class="text-light"><?= htmlspecialchars($about['developer_info']['name'], ENT_QUOTES, 'UTF-8') ?></span>
+					<span class="text-light"><?= htmlspecialchars($about['developer_info']['name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></span>
 				</div>
 				<p class="text-sm text-gray-400">
-					&copy; <?= $current_year ?> <?= htmlspecialchars($footer['copyright_suffix'], ENT_QUOTES, 'UTF-8') ?>
+					&copy; <?= $current_year ?> <?= htmlspecialchars($footer['copyright_suffix'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>
 				</p>
 			</div>
 
 			<nav aria-label="Social and contact links">
 				<ul class="flex items-center gap-4 sm:gap-6">
 					<li>
-						<a href="mailto:<?= htmlspecialchars($contact_info['email'], ENT_QUOTES, 'UTF-8') ?>"
+						<a href="mailto:<?= htmlspecialchars($contact_info['email'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 						   aria-label="Email me"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
 							<?= Icon::render('envelope', 'text-lg sm:text-xl') ?>
 						</a>
 					</li>
 					<li>
-						<a href="<?= htmlspecialchars($contact_info['github'], ENT_QUOTES, 'UTF-8') ?>"
+						<a href="<?= htmlspecialchars($contact_info['github'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 						   target="_blank"
 						   rel="noopener noreferrer me"
 						   aria-label="Visit my GitHub profile"
@@ -41,7 +41,7 @@ $current_year = date('Y');
 						</a>
 					</li>
 					<li>
-						<a href="<?= htmlspecialchars($contact_info['linkedin'], ENT_QUOTES, 'UTF-8') ?>"
+						<a href="<?= htmlspecialchars($contact_info['linkedin'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 						   target="_blank"
 						   rel="noopener noreferrer me"
 						   aria-label="Visit my LinkedIn profile"
@@ -50,7 +50,7 @@ $current_year = date('Y');
 						</a>
 					</li>
 					<li>
-						<a href="<?= htmlspecialchars($contact_info['instagram'], ENT_QUOTES, 'UTF-8') ?>"
+						<a href="<?= htmlspecialchars($contact_info['instagram'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 						   target="_blank"
 						   rel="noopener noreferrer me"
 						   aria-label="Visit my Instagram profile"
@@ -59,7 +59,7 @@ $current_year = date('Y');
 						</a>
 					</li>
 					<li>
-						<a href="tel:<?= htmlspecialchars($contact_info['phone'], ENT_QUOTES, 'UTF-8') ?>"
+						<a href="tel:<?= htmlspecialchars($contact_info['phone'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 						   aria-label="Call me"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
 							<?= Icon::render('phone', 'text-lg sm:text-xl') ?>
