@@ -1,42 +1,33 @@
-const SCROLL_VISIBILITY_THRESHOLD_PX = 300;
 const TYPEWRITER_DEFAULT_DELAY_MS = 45;
 
 /**
- * Toggle the scroll-to-top button's visibility and tab-order via the data-visible attribute and hidden flag.
+ * Toggle the scroll-to-top button by observing when the hero section leaves the viewport.
+ * Uses IntersectionObserver (MDN/web.dev-recommended) instead of a scroll handler to avoid
+ * the forced-reflow pattern of read-scrollY-then-write-attribute on every scroll tick.
  */
 const initScrollToTop = () => {
 	const button = document.getElementById('scrollToTop');
-	if (!button) {
+	const hero = document.getElementById('home');
+	if (!button || !hero) {
 		return;
 	}
 
-	let ticking = false;
-	let isVisible = false;
-
-	const update = () => {
-		const shouldBeVisible = window.scrollY > SCROLL_VISIBILITY_THRESHOLD_PX;
-		if (shouldBeVisible !== isVisible) {
-			isVisible = shouldBeVisible;
-			button.dataset.visible = shouldBeVisible ? 'true' : 'false';
-			button.toggleAttribute('hidden', !shouldBeVisible);
-		}
-		ticking = false;
+	const setVisible = (visible) => {
+		button.dataset.visible = visible ? 'true' : 'false';
+		button.toggleAttribute('hidden', !visible);
 	};
 
-	const onScroll = () => {
-		if (!ticking) {
-			window.requestAnimationFrame(update);
-			ticking = true;
-		}
-	};
-
-	window.addEventListener('scroll', onScroll, { passive: true });
+	const observer = new IntersectionObserver(
+		([entry]) => setVisible(!entry.isIntersecting),
+		{ threshold: 0 },
+	);
+	observer.observe(hero);
 
 	button.addEventListener('click', () => {
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	});
 
-	update();
+	setVisible(false);
 };
 
 /**
