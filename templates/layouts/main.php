@@ -95,13 +95,13 @@ $json_ld_encoded = json_encode($json_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED
 $json_ld_encoded = str_replace('</', '<\/', $json_ld_encoded);
 ?>
 <!DOCTYPE html>
-<html lang="<?= htmlspecialchars($meta['lang'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>" dir="ltr">
+<html lang="<?= htmlspecialchars($meta['lang'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="color-scheme" content="dark">
 	<meta name="theme-color" content="<?= htmlspecialchars($meta['theme_color'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">
-	<meta name="format-detection" content="telephone=no">
+	<meta name="robots" content="index, follow, max-image-preview:large">
 
 	<title><?= htmlspecialchars($meta['name'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></title>
 	<meta name="description" content="<?= htmlspecialchars($meta['description'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>">

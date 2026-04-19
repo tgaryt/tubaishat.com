@@ -41,8 +41,9 @@ final class MailgunService
 			'message' => $data['message'],
 		];
 
+		$fromName = addcslashes($_ENV['MAIL_FROM_NAME'], '\\"');
 		$this->mg->messages()->send($_ENV['MAILGUN_DOMAIN'], [
-			'from' => sprintf('%s <%s>', $_ENV['MAIL_FROM_NAME'], $_ENV['MAIL_FROM_ADDRESS']),
+			'from' => sprintf('"%s" <%s>', $fromName, $_ENV['MAIL_FROM_ADDRESS']),
 			'to' => $_ENV['MAIL_TO_ADDRESS'],
 			'subject' => '[Contact] ' . $data['subject'],
 			'text' => $this->renderText($fields),

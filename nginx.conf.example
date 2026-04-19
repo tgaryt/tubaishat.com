@@ -136,17 +136,19 @@ server {
 
 	# ------------------------------------------------------------------
 	# Long cache for built static assets under /assets/
+	# Only `expires` is used here - adding add_header inside a location
+	# block would wipe the server-level security headers (HSTS, XFO, etc.)
+	# per nginx add_header inheritance rules. `expires 1y;` emits a proper
+	# Cache-Control: max-age=31536000 automatically.
 	# ------------------------------------------------------------------
 	location ~* ^/assets/.+\.(?:css|js|woff2?|ttf|otf|jpg|jpeg|png|gif|webp|avif|svg|ico|pdf)$ {
 		expires 1y;
-		add_header Cache-Control "public, immutable" always;
 		access_log off;
 	}
 
 	# Long cache for root-level icons (favicon.svg + generated raster icons)
 	location ~* ^/(?:favicon(?:-\d+)?|icon-\d+(?:-maskable)?|apple-touch-icon)\.(?:svg|png)$ {
 		expires 1y;
-		add_header Cache-Control "public, immutable" always;
 		access_log off;
 	}
 

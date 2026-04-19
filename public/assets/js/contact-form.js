@@ -58,6 +58,11 @@
 				body: formData,
 				headers: { Accept: 'application/json' },
 			});
+			const contentType = response.headers.get('Content-Type') ?? '';
+			if (!contentType.includes('application/json')) {
+				setStatus('An unexpected error occurred. Please try again later.', 'error');
+				return;
+			}
 			const data = await response.json();
 
 			if (response.ok && data.ok) {

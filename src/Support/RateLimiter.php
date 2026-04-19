@@ -21,7 +21,7 @@ final class RateLimiter
 	 */
 	public function allow(string $ip): bool
 	{
-		$file = $this->storagePath . '/' . hash('sha256', $ip) . '.json';
+		$file = $this->storagePath . '/' . hash('sha256', $this->bucketKey($ip)) . '.json';
 
 		$handle = fopen($file, 'c+');
 		if ($handle === false) {
@@ -37,6 +37,7 @@ final class RateLimiter
 
 		try {
 			$contents = stream_get_contents($handle);
+
 			$now = time();
 			$state = ($contents !== '' && $contents !== false) ? json_decode($contents, true) : null;
 
@@ -60,5 +61,23 @@ final class RateLimiter
 			flock($handle, LOCK_UN);
 			fclose($handle);
 		}
+	}
+
+	/**
+	 * Normalize the client IP to its rate-limit bucket. IPv4 uses the full address; IPv6 collapses
+	 * to the /64 prefix so an attacker with a routed block cannot rotate through billions of /128 addresses.
+	 */
+	private function bucketKey(string $ip): string
+	{
+		if (!str_contains($ip, ':')) {
+			return $ip;
+		}
+
+		$binary = inet_pton($ip);
+		if ($binary === false || strlen($binary) !== 16) {
+			return $ip;
+		}
+
+		return inet_ntop(substr($binary, 0, 8) . str_repeat("\x00", 8));
 	}
 }

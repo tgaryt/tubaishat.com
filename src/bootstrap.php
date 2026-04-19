@@ -35,7 +35,7 @@ if (!is_dir($sessionPath) || !is_writable($sessionPath)) {
 }
 session_save_path($sessionPath);
 
-session_name($_ENV['SESSION_COOKIE_NAME'] ?? 'tsid');
+session_name($_ENV['SESSION_COOKIE_NAME'] ?? '__Host-tsid');
 session_set_cookie_params([
 	'lifetime' => 0,
 	'path' => '/',

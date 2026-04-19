@@ -14,7 +14,7 @@ const initScrollToTop = () => {
 
 	const setVisible = (visible) => {
 		button.dataset.visible = visible ? 'true' : 'false';
-		button.toggleAttribute('hidden', !visible);
+		button.toggleAttribute('inert', !visible);
 	};
 
 	const observer = new IntersectionObserver(
@@ -84,7 +84,8 @@ const initTypewriter = () => {
 	}
 
 	const text = element.dataset.text ?? element.textContent ?? '';
-	const delay = Number.parseInt(element.dataset.delay ?? String(TYPEWRITER_DEFAULT_DELAY_MS), 10);
+	const parsedDelay = Number.parseInt(element.dataset.delay ?? '', 10);
+	const delay = Number.isFinite(parsedDelay) && parsedDelay > 0 ? parsedDelay : TYPEWRITER_DEFAULT_DELAY_MS;
 
 	let current = '';
 	element.textContent = '';

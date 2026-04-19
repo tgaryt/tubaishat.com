@@ -122,7 +122,6 @@ $fields = $form['fields'];
 						       required
 						       maxlength="<?= (int) $fields['email']['maxlength'] ?>"
 						       autocomplete="email"
-						       inputmode="email"
 						       placeholder="<?= htmlspecialchars($fields['email']['placeholder'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 						       aria-describedby="contact-email-error"
 						       class="w-full rounded-lg border border-secondary/20 bg-dark/50 px-3 py-2.5 text-light placeholder:text-gray-500 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 focus:border-secondary aria-[invalid=true]:border-red-400">

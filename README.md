@@ -23,6 +23,7 @@ Local development (any OS):
 composer install
 npm install
 npm run build
+cp .env.example .env      # then edit .env with real Mailgun credentials
 ```
 
 Production server (Linux, once per fresh clone):
