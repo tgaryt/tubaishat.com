@@ -55,6 +55,8 @@ return [
 		'linkedin_display' => 'linkedin.com/in/ry-tubaishat',
 		'instagram' => 'https://www.instagram.com/ryt.tbaishat',
 		'instagram_display' => 'instagram.com/ryt.tbaishat',
+		'whatsapp' => 'https://wa.me/962795945090',
+		'whatsapp_display' => 'wa.me/962795945090',
 	],
 
 	/*
@@ -252,7 +254,7 @@ return [
 		'contact_items' => [
 			['type' => 'Email', 'icon' => 'envelope', 'key' => 'email'],
 			['type' => 'Phone', 'icon' => 'phone', 'key' => 'phone', 'display_key' => 'phone_display'],
-			['type' => 'Location', 'icon' => 'location-dot', 'key' => 'location'],
+			['type' => 'WhatsApp', 'icon' => 'whatsapp', 'key' => 'whatsapp', 'display_key' => 'whatsapp_display'],
 			['type' => 'GitHub', 'icon' => 'github', 'key' => 'github', 'display_key' => 'github_display'],
 			['type' => 'LinkedIn', 'icon' => 'linkedin', 'key' => 'linkedin', 'display_key' => 'linkedin_display'],
 			['type' => 'Instagram', 'icon' => 'instagram', 'key' => 'instagram', 'display_key' => 'instagram_display'],

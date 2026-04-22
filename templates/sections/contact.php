@@ -30,7 +30,7 @@ $fields = $form['fields'];
 						$display = $contact_info[$display_key];
 						$is_email = ($key === 'email');
 						$is_phone = ($key === 'phone');
-						$is_external = in_array($key, ['github', 'linkedin', 'instagram'], true);
+						$is_external = in_array($key, ['github', 'linkedin', 'instagram', 'whatsapp'], true);
 						$href = null;
 						if ($is_email) {
 							$href = 'mailto:' . $value;

@@ -32,6 +32,22 @@ $current_year = date('Y');
 						</a>
 					</li>
 					<li>
+						<a href="tel:<?= htmlspecialchars($contact_info['phone'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
+						   aria-label="Call me"
+						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
+							<?= Icon::render('phone', 'text-lg sm:text-xl') ?>
+						</a>
+					</li>
+					<li>
+						<a href="<?= htmlspecialchars($contact_info['whatsapp'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
+						   target="_blank"
+						   rel="noopener noreferrer me"
+						   aria-label="Message me on WhatsApp"
+						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
+							<?= Icon::render('whatsapp', 'text-lg sm:text-xl') ?>
+						</a>
+					</li>
+					<li>
 						<a href="<?= htmlspecialchars($contact_info['github'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
 						   target="_blank"
 						   rel="noopener noreferrer me"
@@ -56,13 +72,6 @@ $current_year = date('Y');
 						   aria-label="Visit my Instagram profile"
 						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
 							<?= Icon::render('instagram', 'text-lg sm:text-xl') ?>
-						</a>
-					</li>
-					<li>
-						<a href="tel:<?= htmlspecialchars($contact_info['phone'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"
-						   aria-label="Call me"
-						   class="text-gray-400 hover:text-secondary hover:scale-110 transition-all duration-300 inline-block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 rounded">
-							<?= Icon::render('phone', 'text-lg sm:text-xl') ?>
 						</a>
 					</li>
 				</ul>
