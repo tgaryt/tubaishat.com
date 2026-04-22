@@ -66,7 +66,7 @@
 			const data = await response.json();
 
 			if (response.ok && data.ok) {
-				setStatus('Thank you. Your message has been sent successfully. I will get back to you as soon as possible.', 'success');
+				setStatus('Your message has been sent. I will get back to you as soon as possible.', 'success');
 				form.reset();
 				if (data.csrf_token) {
 					const csrfInput = form.querySelector('input[name="_csrf"]');
@@ -76,9 +76,9 @@
 				}
 			} else if (response.status === 422 && data.errors) {
 				showFieldErrors(data.errors);
-				setStatus('Please review the highlighted fields and try again.', 'error');
+				setStatus('Please correct the highlighted fields and try again.', 'error');
 			} else if (response.status === 429) {
-				setStatus(data.error ?? 'You have reached the submission limit for this hour. Please try again later.', 'error');
+				setStatus(data.error ?? 'The hourly submission limit has been reached. Please try again later.', 'error');
 			} else if (response.status === 419) {
 				setStatus(data.error ?? 'Your session has expired. Please refresh the page and try again.', 'error');
 			} else {

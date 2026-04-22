@@ -24,21 +24,21 @@ final class Validator
 
 		$name = $this->stringOf('name');
 		if ($name === '' || mb_strlen($name) > 100) {
-			$errors['name'] = 'Your name is required and must be 100 characters or fewer.';
+			$errors['name'] = 'Name is required and must not exceed 100 characters.';
 		} elseif ($this->hasControlChars($name)) {
-			$errors['name'] = 'Your name contains invalid characters.';
+			$errors['name'] = 'Name contains invalid characters.';
 		}
 
 		$company = $this->stringOf('company');
 		if (mb_strlen($company) > 120 || $this->hasControlChars($company)) {
-			$errors['company'] = 'The company name is invalid or exceeds 120 characters.';
+			$errors['company'] = 'Company name is invalid or exceeds 120 characters.';
 		}
 
 		$email = $this->stringOf('email');
 		if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 254) {
 			$errors['email'] = 'A valid email address is required.';
 		} elseif ($this->hasControlChars($email)) {
-			$errors['email'] = 'The email address contains invalid characters.';
+			$errors['email'] = 'Email address contains invalid characters.';
 		}
 
 		$inquiryType = $this->stringOf('inquiry_type');
@@ -49,15 +49,15 @@ final class Validator
 		$subject = $this->stringOf('subject');
 		$subjectLen = mb_strlen($subject);
 		if ($subjectLen < 3 || $subjectLen > 150) {
-			$errors['subject'] = 'The subject must be between 3 and 150 characters.';
+			$errors['subject'] = 'Subject must be between 3 and 150 characters.';
 		} elseif ($this->hasControlChars($subject)) {
-			$errors['subject'] = 'The subject contains invalid characters.';
+			$errors['subject'] = 'Subject contains invalid characters.';
 		}
 
 		$message = $this->stringOf('message');
 		$messageLen = mb_strlen($message);
 		if ($messageLen < 10 || $messageLen > 5000) {
-			$errors['message'] = 'The message must be between 10 and 5000 characters.';
+			$errors['message'] = 'Message must be between 10 and 5,000 characters.';
 		}
 
 		if (empty($errors)) {

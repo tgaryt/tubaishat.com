@@ -130,15 +130,15 @@ $fields = $form['fields'];
 
 					<div>
 						<label for="contact-inquiry-type" class="block text-sm font-medium text-light mb-1.5">
-							Inquiry type <span class="text-secondary" aria-hidden="true">*</span>
+							<?= htmlspecialchars($form['inquiry_type']['label'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?> <span class="text-secondary" aria-hidden="true">*</span>
 						</label>
 						<select id="contact-inquiry-type"
 						        name="inquiry_type"
 						        required
 						        aria-describedby="contact-inquiry-type-error"
 						        class="w-full rounded-lg border border-secondary/20 bg-dark/50 px-3 py-2.5 text-light focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 focus:border-secondary aria-[invalid=true]:border-red-400">
-							<option value="">Select one</option>
-							<?php foreach ($form['inquiry_types'] as $value => $label): ?>
+							<option value=""><?= htmlspecialchars($form['inquiry_type']['placeholder'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></option>
+							<?php foreach ($form['inquiry_type']['options'] as $value => $label): ?>
 								<option value="<?= htmlspecialchars($value, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?>"><?= htmlspecialchars($label, ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></option>
 							<?php endforeach; ?>
 						</select>
@@ -179,7 +179,7 @@ $fields = $form['fields'];
 
 					<div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between pt-2">
 						<button type="submit"
-						        class="inline-flex items-center justify-center gap-2 bg-linear-to-r from-secondary to-accent hover:from-accent hover:to-secondary text-primary font-semibold py-3 px-6 rounded-lg shadow-lg shadow-secondary/20 transition-transform duration-300 hover:scale-105 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100">
+						        class="inline-flex shrink-0 items-center justify-center gap-2 bg-linear-to-r from-secondary to-accent hover:from-accent hover:to-secondary text-primary font-semibold py-3 px-6 rounded-lg shadow-lg shadow-secondary/20 transition-transform duration-300 hover:scale-105 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-secondary/50 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100">
 							<?= Icon::render('envelope') ?>
 							<span><?= htmlspecialchars($form['submit_label'], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8') ?></span>
 						</button>

@@ -239,7 +239,7 @@ return [
 	 *  contact_items[].display_key (optional) overrides which contact_info key is rendered
 	 *  as the visible label (e.g., phone stores E.164 but shows phone_display).
 	 *
-	 *  form.inquiry_types MUST match the allow-list in src/Support/Validator.php.
+	 *  form.inquiry_type.options MUST match the allow-list in src/Support/Validator.php.
 	 *  If you edit one, edit the other.
 	 */
 	'contact' => [
@@ -259,13 +259,17 @@ return [
 		],
 		'form' => [
 			'submit_label' => 'Send message',
-			'inquiry_types' => [
-				'full_time' => 'Full-time opportunity',
-				'freelance' => 'Freelance project',
-				'other' => 'Other',
+			'inquiry_type' => [
+				'label' => 'Inquiry type',
+				'placeholder' => 'Select an inquiry type',
+				'options' => [
+					'full_time' => 'Full-time opportunity',
+					'freelance' => 'Freelance project',
+					'other' => 'Other',
+				],
 			],
 			'fields' => [
-				'name' => ['label' => 'Your name', 'placeholder' => 'Jane Doe', 'required' => true, 'maxlength' => 100],
+				'name' => ['label' => 'Name', 'placeholder' => 'Jane Doe', 'required' => true, 'maxlength' => 100],
 				'company' => ['label' => 'Company (optional)', 'placeholder' => 'Acme Inc.', 'required' => false, 'maxlength' => 120],
 				'email' => ['label' => 'Email', 'placeholder' => 'you@example.com', 'required' => true, 'maxlength' => 254],
 				'subject' => ['label' => 'Subject', 'placeholder' => 'Short summary', 'required' => true, 'minlength' => 3, 'maxlength' => 150],

@@ -31,7 +31,7 @@ final class ContactController
 			http_response_code(419);
 			echo json_encode([
 				'ok' => false,
-				'error' => 'Your session has expired. Please refresh the page and send the message again.',
+				'error' => 'Your session has expired. Please refresh the page and try again.',
 			], self::JSON_FLAGS);
 			return;
 		}
@@ -41,7 +41,7 @@ final class ContactController
 			http_response_code(429);
 			echo json_encode([
 				'ok' => false,
-				'error' => 'You have reached the submission limit for this hour. Please try again later.',
+				'error' => 'The hourly submission limit has been reached. Please try again later.',
 			], self::JSON_FLAGS);
 			return;
 		}
@@ -61,7 +61,7 @@ final class ContactController
 			http_response_code(500);
 			echo json_encode([
 				'ok' => false,
-				'error' => 'The message could not be sent at this time. Please email ba8lawa2023@gmail.com directly.',
+				'error' => 'The message could not be delivered at this time. Please email ba8lawa2023@gmail.com directly.',
 			], self::JSON_FLAGS);
 			return;
 		}
