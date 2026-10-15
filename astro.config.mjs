@@ -1,5 +1,5 @@
-// Astro configuration: prerendered pages served by the Node.js standalone server, with a sitemap, self-hosted fonts, and a Content Security Policy on every page.
-import { defineConfig, fontProviders } from 'astro/config';
+// Astro configuration: prerendered pages and the contact action served by the Node.js standalone server without image processing, with a sitemap, self-hosted fonts, a Content Security Policy on every page that allows the Cloudflare Turnstile widget, the request checks of the contact action, and the schema of its environment variables.
+import { defineConfig, envField, fontProviders, passthroughImageService } from 'astro/config';
 import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 
@@ -10,6 +10,9 @@ export default defineConfig({
 	}),
 	integrations: [sitemap()],
 	session: false,
+	image: {
+		service: passthroughImageService()
+	},
 	markdown: {
 		syntaxHighlight: false
 	},
@@ -22,9 +25,20 @@ export default defineConfig({
 				"default-src 'self'",
 				"base-uri 'none'",
 				"object-src 'none'",
-				"form-action 'self'"
-			]
-		}
+				"form-action 'self'",
+				'frame-src https://challenges.cloudflare.com'
+			],
+			scriptDirective: {
+				resources: ["'self'", 'https://challenges.cloudflare.com']
+			}
+		},
+		allowedDomains: [
+			{
+				hostname: 'tubaishat.com',
+				protocol: 'https'
+			}
+		],
+		actionBodySizeLimit: 65536
 	},
 	fonts: [
 		{
@@ -56,5 +70,18 @@ export default defineConfig({
 				]
 			}
 		}
-	]
+	],
+	env: {
+		schema: {
+			TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public' }),
+			TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret' }),
+			TURNSTILE_EXPECTED_HOSTNAME: envField.string({ context: 'server', access: 'public', default: 'tubaishat.com' }),
+			MAILGUN_API_KEY: envField.string({ context: 'server', access: 'secret' }),
+			MAILGUN_DOMAIN: envField.string({ context: 'server', access: 'public' }),
+			MAILGUN_REGION: envField.enum({ context: 'server', access: 'public', values: ['us', 'eu'] }),
+			CONTACT_FROM_EMAIL: envField.string({ context: 'server', access: 'secret' }),
+			CONTACT_TO_EMAIL: envField.string({ context: 'server', access: 'secret' })
+		},
+		validateSecrets: true
+	}
 });

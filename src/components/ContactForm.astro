@@ -1,0 +1,396 @@
+---
+// Contact form of the Let's Talk section: the "Send a message" heading, the instruction, the notice shown without JavaScript, the name, email, and message fields with the message hint and the error messages, the slot where the Cloudflare Turnstile widget appears after the first interaction with the form, the submit button with the status region, and the privacy note; its script checks the fields, waits for a Turnstile token, and sends the form to the contact action.
+import { contactFields } from '../lib/contact-fields';
+---
+
+<div class="panel">
+	<h3>Send a message</h3>
+	<p class="instruction">All fields are required.</p>
+	<noscript>
+		<p class="instruction">Sending this form requires JavaScript. You can reach me using the direct contact details on this page.</p>
+	</noscript>
+	<form id="contact-form" method="post" novalidate>
+		<div>
+			<label for="contact-name">Name</label>
+			<input id="contact-name" name="name" type="text" autocomplete="name" required maxlength={contactFields.name.maxLength} aria-describedby="contact-name-error" />
+			<p id="contact-name-error" class="error"></p>
+		</div>
+		<div>
+			<label for="contact-email">Email</label>
+			<input id="contact-email" name="email" type="email" autocomplete="email" required maxlength={contactFields.email.maxLength} spellcheck="false" aria-describedby="contact-email-error" />
+			<p id="contact-email-error" class="error"></p>
+		</div>
+		<div>
+			<label for="contact-message">Message</label>
+			<textarea id="contact-message" name="message" required maxlength={contactFields.message.maxLength} rows="8" aria-describedby="contact-message-hint contact-message-error"></textarea>
+			<p id="contact-message-hint" class="hint">Up to 5000 characters.</p>
+			<p id="contact-message-error" class="error"></p>
+		</div>
+		<div>
+			<div class="turnstile"></div>
+			<div class="submit">
+				<button class="button" type="submit">Send message</button>
+				<p class="status" role="status"></p>
+			</div>
+		</div>
+		<p class="privacy">Your message is sent to me by email and is not stored on this website. This form is protected by Cloudflare Turnstile.</p>
+	</form>
+</div>
+
+<style>
+	.panel {
+		padding: clamp(1.25rem, 3vw, 2rem);
+		border: 1px solid var(--color-rule);
+		border-radius: var(--radius);
+		background-color: var(--color-surface);
+	}
+
+	h3 {
+		color: var(--color-text);
+		font-size: var(--text-xl);
+		font-weight: 600;
+		line-height: 1.15;
+	}
+
+	.instruction {
+		margin-top: var(--space-3);
+		font-size: var(--text-sm);
+	}
+
+	form {
+		display: grid;
+		gap: var(--space-5);
+		margin-top: var(--space-5);
+	}
+
+	label {
+		color: var(--color-text-muted);
+		font-size: var(--text-sm);
+		font-weight: 500;
+	}
+
+	input,
+	textarea {
+		display: block;
+		width: 100%;
+		margin-top: var(--space-2);
+		padding: 0.75rem 0.875rem;
+		border: 1px solid var(--color-control-border);
+		border-radius: var(--radius);
+		background-color: var(--color-field);
+		color: var(--color-text);
+		font: inherit;
+	}
+
+	textarea {
+		min-height: 10rem;
+		resize: vertical;
+	}
+
+	input:focus-visible,
+	textarea:focus-visible {
+		border-color: var(--color-accent);
+	}
+
+	input[aria-invalid="true"],
+	textarea[aria-invalid="true"] {
+		padding: calc(0.75rem - 1px) calc(0.875rem - 1px);
+		border: 2px solid var(--color-error);
+	}
+
+	.hint,
+	.error {
+		margin-top: var(--space-2);
+		font-size: var(--text-sm);
+	}
+
+	.hint {
+		color: var(--color-text-subtle);
+	}
+
+	.error {
+		color: var(--color-error);
+	}
+
+	.error:empty {
+		display: none;
+	}
+
+	.turnstile {
+		line-height: 0;
+	}
+
+	.turnstile[data-size] {
+		margin-bottom: var(--space-5);
+	}
+
+	.turnstile[data-size="flexible"] {
+		min-height: 65px;
+	}
+
+	.turnstile[data-size="compact"] {
+		min-height: 140px;
+	}
+
+	.submit {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-4) var(--space-5);
+	}
+
+	.status {
+		font-size: var(--text-sm);
+	}
+
+	.status[data-tone="success"] {
+		color: var(--color-success);
+	}
+
+	.status[data-tone="error"] {
+		color: var(--color-error);
+	}
+
+	.privacy {
+		color: var(--color-text-subtle);
+		font-size: var(--text-sm);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		input,
+		textarea {
+			transition: border-color 150ms;
+		}
+	}
+</style>
+
+<script>
+	import { actions, isInputError } from 'astro:actions';
+	import { TURNSTILE_SITE_KEY } from 'astro:env/client';
+	import { contactFields, controlCharacter } from '../lib/contact-fields';
+
+	type Field = HTMLInputElement | HTMLTextAreaElement;
+
+	type Tone = 'progress' | 'success' | 'error';
+
+	interface TurnstileOptions {
+		sitekey: string;
+		theme: 'dark';
+		size: 'flexible' | 'compact';
+		callback: (token: string) => void;
+		'error-callback': () => boolean;
+		'expired-callback': () => void;
+		'timeout-callback': () => void;
+	}
+
+	declare global {
+		interface Window {
+			turnstile: {
+				render: (container: HTMLElement, options: TurnstileOptions) => string;
+				reset: (widgetId: string) => void;
+			};
+		}
+	}
+
+	const statusMessages = {
+		checking: 'Completing a quick security check...',
+		sent: 'Thank you. Your message has been sent.',
+		securityFailed: 'The security check could not be completed. Please try again.',
+		rateLimited: 'Too many messages have been sent recently. Please try again later or use the direct contact details.',
+		unavailable: 'Your message could not be sent right now. Please try again in a few minutes or use the direct contact details.'
+	};
+
+	const form = document.getElementById('contact-form') as HTMLFormElement;
+	const fields = [...form.querySelectorAll<Field>('input, textarea')];
+	const slot = form.querySelector('.turnstile') as HTMLElement;
+	const button = form.querySelector('button') as HTMLButtonElement;
+	const status = form.querySelector('.status') as HTMLElement;
+
+	let widgetId: string | undefined;
+	let token = '';
+	let scriptRequested = false;
+	let widgetFailed = false;
+	let waiting = false;
+	let pending = false;
+
+	// Returns the error message for a field's trimmed value, or an empty string when it is valid: the checks of the contact action, with the browser's email syntax check.
+	function fieldError(field: Field): string {
+		const rules = contactFields[field.name as keyof typeof contactFields];
+		const value = field.value.trim();
+		if (!value) {
+			return rules.missing;
+		}
+		if ([...value].length > rules.maxLength) {
+			return rules.tooLong;
+		}
+		if (field.name === 'name' && controlCharacter.test(value)) {
+			return contactFields.name.invalid;
+		}
+		if (field.name === 'email' && field.validity.typeMismatch) {
+			return contactFields.email.invalid;
+		}
+		return '';
+	}
+
+	// Shows the error message of each field from the given lookup, removes the others, marks invalid fields with aria-invalid, and moves focus to the first one; returns whether any field is invalid.
+	function showErrors(errorOf: (field: Field) => string): boolean {
+		let firstInvalid: Field | undefined;
+		for (const field of fields) {
+			const message = errorOf(field);
+			(document.getElementById(`${field.id}-error`) as HTMLElement).textContent = message;
+			if (message) {
+				field.setAttribute('aria-invalid', 'true');
+				firstInvalid ??= field;
+			} else {
+				field.removeAttribute('aria-invalid');
+			}
+		}
+		firstInvalid?.focus();
+		return firstInvalid !== undefined;
+	}
+
+	// Shows a message in the status region; its tone sets the text color.
+	function showStatus(message: string, tone: Tone) {
+		status.textContent = message;
+		status.dataset.tone = tone;
+	}
+
+	// Ends the pending state, so that the button is available again and reads "Send message", and shows the message in the status region.
+	function finish(message: string, tone: Tone) {
+		pending = false;
+		button.removeAttribute('aria-disabled');
+		button.textContent = 'Send message';
+		showStatus(message, tone);
+	}
+
+	// Ends a submission that waits for a token with the security message.
+	function failWaiting() {
+		if (waiting) {
+			waiting = false;
+			finish(statusMessages.securityFailed, 'error');
+		}
+	}
+
+	// Sends the form to the contact action and returns the status message and tone of the result: the form is cleared only on success, the field errors that the action returns are shown at their fields, and a rejected call, such as a network failure, gives the unavailable message.
+	async function submitToAction(): Promise<[string, Tone]> {
+		try {
+			const { error } = await actions.contact(new FormData(form));
+			if (!error) {
+				form.reset();
+				return [statusMessages.sent, 'success'];
+			}
+			if (isInputError(error)) {
+				// Returns the first message that the contact action gave for the field.
+				const invalid = showErrors((field) => error.fields[field.name as keyof typeof error.fields]?.[0] ?? '');
+				return [invalid ? '' : statusMessages.securityFailed, 'error'];
+			}
+			if (error.code === 'FORBIDDEN') {
+				return [statusMessages.securityFailed, 'error'];
+			}
+			if (error.code === 'TOO_MANY_REQUESTS') {
+				return [statusMessages.rateLimited, 'error'];
+			}
+			return [statusMessages.unavailable, 'error'];
+		} catch {
+			return [statusMessages.unavailable, 'error'];
+		}
+	}
+
+	// Sends the form, then resets the widget, because each token can be validated only once, and shows the result.
+	async function send() {
+		showStatus('', 'progress');
+		const [message, tone] = await submitToAction();
+		token = '';
+		if (widgetId !== undefined) {
+			window.turnstile.reset(widgetId);
+		}
+		finish(message, tone);
+	}
+
+	// Stores a new token from the widget and sends the submission that waits for it.
+	function handleToken(newToken: string) {
+		token = newToken;
+		widgetFailed = false;
+		if (waiting) {
+			waiting = false;
+			void send();
+		}
+	}
+
+	// Records a widget error or an interactive challenge that timed out and ends a waiting submission with the security message; returning true tells Turnstile that the error was handled, so it logs no warning.
+	function handleWidgetFailure() {
+		token = '';
+		widgetFailed = true;
+		failWaiting();
+		return true;
+	}
+
+	// Drops the expired token; the widget then obtains a new one by itself.
+	function handleExpiry() {
+		token = '';
+	}
+
+	// Renders the dark widget into the slot at the size that its space was reserved for.
+	function renderWidget() {
+		widgetId = window.turnstile.render(slot, {
+			sitekey: TURNSTILE_SITE_KEY,
+			theme: 'dark',
+			size: slot.dataset.size === 'compact' ? 'compact' : 'flexible',
+			callback: handleToken,
+			'error-callback': handleWidgetFailure,
+			'expired-callback': handleExpiry,
+			'timeout-callback': handleWidgetFailure
+		});
+	}
+
+	// Removes the script that failed to load, so that the next submit requests it again, and ends a waiting submission with the security message.
+	function handleScriptError(this: HTMLScriptElement) {
+		this.remove();
+		scriptRequested = false;
+		failWaiting();
+	}
+
+	// Reserves the widget's space in the slot, 65 pixels tall for the flexible widget when the slot is at least 300 pixels wide and 140 pixels for the compact widget otherwise, and loads the Turnstile script unless it was already requested.
+	function loadTurnstile() {
+		if (scriptRequested) {
+			return;
+		}
+		scriptRequested = true;
+		slot.dataset.size = slot.clientWidth >= 300 ? 'flexible' : 'compact';
+		const script = document.createElement('script');
+		script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+		script.addEventListener('load', renderWidget);
+		script.addEventListener('error', handleScriptError);
+		document.head.append(script);
+	}
+
+	// Checks the fields when the form is submitted and sends it once a Turnstile token is available; when the widget has failed, it is reset to try again, and a submit is ignored while another one is pending.
+	function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
+		if (pending) {
+			return;
+		}
+		showStatus('', 'progress');
+		if (showErrors(fieldError)) {
+			return;
+		}
+		pending = true;
+		button.setAttribute('aria-disabled', 'true');
+		button.textContent = 'Sending...';
+		if (token) {
+			void send();
+			return;
+		}
+		waiting = true;
+		showStatus(statusMessages.checking, 'progress');
+		if (widgetId !== undefined && widgetFailed) {
+			widgetFailed = false;
+			window.turnstile.reset(widgetId);
+		} else {
+			loadTurnstile();
+		}
+	}
+
+	form.addEventListener('focusin', loadTurnstile, { once: true });
+	form.addEventListener('submit', handleSubmit);
+</script>

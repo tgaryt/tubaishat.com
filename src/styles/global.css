@@ -3,14 +3,19 @@
 :root {
 	color-scheme: dark;
 	--color-bg: #0D1117;
+	--color-surface: #121822;
+	--color-field: #111720;
 	--color-rule: #232B37;
 	--color-rule-strong: #3A4555;
+	--color-control-border: #6B7788;
 	--color-text: #ECEFF3;
 	--color-text-muted: #B4BCC8;
 	--color-text-subtle: #8E98A6;
 	--color-accent: #E2B26A;
 	--color-accent-strong: #F0C98A;
 	--color-on-accent: #0D1117;
+	--color-error: #F4978E;
+	--color-success: #8FD5A6;
 	--text-xs: 0.8125rem;
 	--text-sm: 0.9375rem;
 	--text-base: clamp(1.0625rem, 1.02rem + 0.18vw, 1.125rem);
@@ -120,9 +125,11 @@ a:focus-visible {
 	display: inline-block;
 	min-height: 3rem;
 	padding: 0.875rem 1.375rem;
+	border: 0;
 	border-radius: var(--radius);
 	background-color: var(--color-accent);
 	color: var(--color-on-accent);
+	font-family: inherit;
 	font-size: 1rem;
 	font-weight: 600;
 	line-height: 1.25;
