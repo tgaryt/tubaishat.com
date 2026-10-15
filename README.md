@@ -67,7 +67,7 @@ pm2 restart ecosystem.config.cjs
 ### Runtime contract
 
 - The server listens on `127.0.0.1`, port `4321`. The `HOST` and `PORT` environment variables override the address and the port when the server starts.
-- The reverse proxy in front of the server passes the original `Host` header (`tubaishat.com`) and the `X-Forwarded-Proto` and `CF-Connecting-IP` headers that Cloudflare adds. Astro trusts `Host` and `X-Forwarded-Proto` only when they describe `https://tubaishat.com`, which keeps its check that form submissions come from the site itself correct behind the proxy, and the rate limits count submissions per `CF-Connecting-IP` address.
+- The reverse proxy in front of the server passes the original `Host` header (`tubaishat.com`) and the `X-Forwarded-Proto` and `CF-Connecting-IP` headers that Cloudflare adds. Astro trusts `Host` and `X-Forwarded-Proto` only when they describe `https://tubaishat.com`, which keeps its check that form submissions come from the site itself correct behind the proxy, and the per-visitor rate limit counts submissions per `CF-Connecting-IP` address.
 - The rate limits and the count of submissions in flight are kept in memory, so the site runs as exactly one process.
 
 ### Shutdown
@@ -76,4 +76,4 @@ On SIGINT, which PM2 sends to stop or restart the process, or on SIGTERM, the se
 
 ### Logs
 
-PM2 writes the server output to `$HOME/.pm2/logs` and prefixes each line with its date and time. `pm2 logs tubaishat.com` shows it. The contact action logs each outcome without names, email addresses, message text, tokens, IP addresses, or keys: a sent message; a rate-limited submission; a Turnstile token that Siteverify rejected, with its error codes or "hostname mismatch"; Siteverify unavailable, with the HTTP status, "internal-error", "timeout", or "network"; and a failed Mailgun send, with the HTTP status, "timeout", or "network".
+PM2 writes the server output to `$HOME/.pm2/logs` and prefixes each line with its date and time. `pm2 logs tubaishat.com` shows it. The contact action logs these outcomes, without names, email addresses, message text, tokens, IP addresses, or keys: a sent message; a rate-limited submission; a rejected Turnstile token, with Siteverify's error codes or "hostname mismatch"; Siteverify unavailable, with the HTTP status, "internal-error", "timeout", or "network"; and a failed Mailgun send, with the HTTP status, "timeout", or "network".
