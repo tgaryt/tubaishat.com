@@ -1,0 +1,15 @@
+---
+// Home page, built to index.html: the page title and meta description, and the Hero and About sections in page order.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import { profile } from '../data/profile';
+---
+
+<BaseLayout
+	title={`${profile.name} - ${profile.professionalTitle}`}
+	description="Full Stack Developer based in Jordan with over 3 years of experience building and maintaining web applications end-to-end with PHP, Node.js, TypeScript, and MySQL."
+>
+	<Hero />
+	<About />
+</BaseLayout>

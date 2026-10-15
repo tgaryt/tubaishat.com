@@ -1,3 +1,5 @@
 # Crawl rules for tubaishat.com
 User-agent: *
 Disallow: /cdn-cgi/
+
+Sitemap: https://tubaishat.com/sitemap-index.xml

@@ -1,0 +1,74 @@
+---
+// Hero section: the location eyebrow, the name as the page heading, the summary lead, the availability line, and the two calls to action.
+import { profile } from '../data/profile';
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+	<p class="eyebrow">Based in {profile.location}</p>
+	<h1 id="hero-heading">{profile.name}</h1>
+	<p class="lead">{profile.hero.lead}</p>
+	<p class="availability">{profile.hero.availability}</p>
+	<div class="actions">
+		<a class="button" href="/#contact">Let's Talk</a>
+		<a class="link" href="/#experience">View experience</a>
+	</div>
+</section>
+
+<style>
+	.hero {
+		padding-block: clamp(4rem, 2rem + 7vw, 9rem) var(--section-space);
+	}
+
+	.eyebrow {
+		margin-bottom: var(--space-5);
+		color: var(--color-text-subtle);
+		font-size: var(--text-xs);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		font-size: var(--text-display);
+		line-height: 1;
+		letter-spacing: -0.015em;
+	}
+
+	.lead {
+		max-width: 36ch;
+		margin-top: var(--space-6);
+		font-size: var(--text-lg);
+		line-height: 1.45;
+		text-wrap: balance;
+	}
+
+	.availability {
+		display: flex;
+		gap: var(--space-3);
+		margin-top: var(--space-5);
+		font-size: var(--text-sm);
+	}
+
+	.availability::before {
+		content: "";
+		flex: none;
+		width: 0.5rem;
+		height: 0.5rem;
+		margin-top: calc((1lh - 0.5rem) / 2);
+		border-radius: 50%;
+		background-color: var(--color-accent);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-4) var(--space-6);
+		margin-top: var(--space-7);
+	}
+
+	.link {
+		padding-block: var(--space-3);
+		font-size: 1rem;
+		font-weight: 600;
+	}
+</style>

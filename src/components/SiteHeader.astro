@@ -1,0 +1,25 @@
+---
+// Site header on every page: the wordmark, which links to the home page.
+import { profile } from '../data/profile';
+---
+
+<header>
+	<div class="container bar">
+		<a class="wordmark" href="/">{profile.name}</a>
+	</div>
+</header>
+
+<style>
+	.bar {
+		display: flex;
+		align-items: center;
+		min-height: 4rem;
+	}
+
+	.wordmark {
+		padding-block: var(--space-2);
+		font-size: 1rem;
+		font-weight: 600;
+		text-decoration-line: none;
+	}
+</style>

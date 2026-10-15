@@ -1,0 +1,63 @@
+---
+// About section: the section heading, the summary lead, the body paragraphs, and the projects and education facts.
+import { profile } from '../data/profile';
+---
+
+<section id="about" class="section" aria-labelledby="about-heading">
+	<h2 id="about-heading">About</h2>
+	<div>
+		<p class="lead">{profile.about.lead}</p>
+		{/* Renders each About body paragraph, in feed order. */}
+		{profile.about.body.map((paragraph) => <p>{paragraph}</p>)}
+		<dl>
+			{/* Renders each fact as one row: its label, then its value. */}
+			{
+				profile.about.facts.map((fact) => (
+					<div class="fact">
+						<dt>{fact.label}</dt>
+						<dd>{fact.value}</dd>
+					</div>
+				))
+			}
+		</dl>
+	</div>
+</section>
+
+<style>
+	.lead {
+		color: var(--color-text);
+		font-size: var(--text-lg);
+		line-height: 1.45;
+	}
+
+	p + p {
+		margin-top: var(--space-5);
+	}
+
+	dl {
+		margin-top: var(--space-7);
+	}
+
+	.fact {
+		padding-block: var(--space-4);
+		border-top: 1px solid var(--color-rule);
+	}
+
+	dt {
+		color: var(--color-text-subtle);
+		font-size: var(--text-sm);
+	}
+
+	dd {
+		color: var(--color-text);
+	}
+
+	@media (min-width: 40rem) {
+		.fact {
+			display: grid;
+			grid-template-columns: 10rem 1fr;
+			align-items: baseline;
+			gap: var(--space-5);
+		}
+	}
+</style>

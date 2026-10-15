@@ -4,9 +4,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Page not found - Rayyan Tubaishat">
-	<main>
+	<div class="not-found">
 		<h1>Page not found</h1>
 		<p>This page does not exist.</p>
-		<a href="/">Go to the home page</a>
-	</main>
+		<a class="button" href="/">Go to the home page</a>
+	</div>
 </BaseLayout>
+
+<style>
+	.not-found {
+		padding-block: clamp(4rem, 2rem + 7vw, 9rem) var(--section-space);
+	}
+
+	h1 {
+		font-size: var(--text-2xl);
+	}
+
+	p {
+		margin-top: var(--space-5);
+	}
+
+	.button {
+		margin-top: var(--space-7);
+	}
+</style>
