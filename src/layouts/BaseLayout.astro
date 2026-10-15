@@ -1,5 +1,5 @@
 ---
-// Shared HTML document shell for every page: language, character encoding, viewport, dark color scheme, theme color, page title, optional meta description, the two preloaded self-hosted font families, global styles, skip link, site header, the main landmark that holds the page content, and site footer.
+// Shared HTML document shell for every page: language, character encoding, viewport, dark color scheme, theme color, page title, optional meta description, the site icons, the two preloaded self-hosted font families, the head slot for a page's own head elements, global styles, skip link, site header, the main landmark that holds the page content, and site footer.
 import '../styles/global.css';
 import { Font } from 'astro:assets';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -22,8 +22,12 @@ const { title, description } = Astro.props;
 		<meta name="theme-color" content="#0D1117" />
 		<title>{title}</title>
 		{description && <meta name="description" content={description} />}
+		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<Font cssVariable="--font-sans" preload />
 		<Font cssVariable="--font-serif" preload />
+		<slot name="head" />
 	</head>
 	<body>
 		<a class="skip-link" href="#main">Skip to content</a>

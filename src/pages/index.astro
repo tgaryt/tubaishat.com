@@ -1,5 +1,5 @@
 ---
-// Home page, built to index.html: the page title and meta description, and the five content sections in page order.
+// Home page, built to index.html: the page title and meta description, the elements it adds to the document head through the layout's head slot (the canonical URL, the Open Graph metadata for link previews, and the WebSite structured data that gives the site name, with absolute URLs built from the site address in the Astro configuration), and the five content sections in page order.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
@@ -7,12 +7,34 @@ import Experience from '../components/Experience.astro';
 import Skills from '../components/Skills.astro';
 import LetsTalk from '../components/LetsTalk.astro';
 import { profile } from '../data/profile';
+
+const title = `${profile.name} - ${profile.professionalTitle}`;
+const description = 'Full Stack Developer based in Jordan with over 3 years of experience building and maintaining web applications end-to-end with PHP, Node.js, TypeScript, and MySQL.';
+const home = new URL('/', Astro.site);
+const website = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: profile.name,
+	alternateName: home.hostname,
+	url: home.href
+};
 ---
 
-<BaseLayout
-	title={`${profile.name} - ${profile.professionalTitle}`}
-	description="Full Stack Developer based in Jordan with over 3 years of experience building and maintaining web applications end-to-end with PHP, Node.js, TypeScript, and MySQL."
->
+<BaseLayout title={title} description={description}>
+	<Fragment slot="head">
+		<link rel="canonical" href={home.href} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={profile.name} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={home.href} />
+		<meta property="og:image" content={new URL('/og-image.png', home).href} />
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="An RT monogram above Rayyan Tubaishat, Full Stack Developer, and tubaishat.com in white and gold lettering on a dark background" />
+		<script type="application/ld+json" set:html={JSON.stringify(website)} />
+	</Fragment>
 	<Hero />
 	<About />
 	<Experience />
