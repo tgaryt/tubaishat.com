@@ -1,0 +1,6 @@
+// TypeScript settings read by Astro, astro check, and editors: Astro's strict preset for all project files plus Astro's generated types, excluding the build output.
+{
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist"]
+}

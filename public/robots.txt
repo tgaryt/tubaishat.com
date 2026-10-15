@@ -1,0 +1,3 @@
+# Crawl rules for tubaishat.com
+User-agent: *
+Disallow: /cdn-cgi/

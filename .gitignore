@@ -1,0 +1,5 @@
+# Paths Git ignores: build output, Astro's generated types and local state, installed dependencies, and the local environment file that holds secrets.
+dist/
+.astro/
+node_modules/
+.env
