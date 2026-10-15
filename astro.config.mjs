@@ -1,4 +1,4 @@
-// Astro configuration: prerendered pages and the contact action served by the Node.js standalone server without image processing, with a sitemap, self-hosted fonts, a Content Security Policy on every page that allows the Cloudflare Turnstile widget, the request checks of the contact action, and the schema of its environment variables.
+// Astro configuration: prerendered pages and the contact action served by the Node.js standalone server without image processing, with a sitemap, self-hosted fonts, a Content Security Policy on every page that allows the Cloudflare Turnstile widget, the request checks of the contact action, and the schema of the contact form's environment variables.
 import { defineConfig, envField, fontProviders, passthroughImageService } from 'astro/config';
 import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';

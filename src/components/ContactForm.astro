@@ -350,7 +350,7 @@ import { contactFields } from '../lib/contact-fields';
 		failWaiting();
 	}
 
-	// Reserves the widget's space in the slot, 65 pixels tall for the flexible widget when the slot is at least 300 pixels wide and 140 pixels for the compact widget otherwise, and loads the Turnstile script unless it was already requested.
+	// Unless the Turnstile script was already requested, reserves the widget's space in the slot, 65 pixels tall for the flexible widget when the slot is at least 300 pixels wide and 140 pixels for the compact widget otherwise, and loads the script.
 	function loadTurnstile() {
 		if (scriptRequested) {
 			return;

@@ -42,7 +42,7 @@ TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 TURNSTILE_EXPECTED_HOSTNAME=example.com
 ```
 
-The Mailgun variables hold the real values, so a test submission sends a real email. The production `.env` holds the real Turnstile keys and leaves `TURNSTILE_EXPECTED_HOSTNAME` empty.
+The other variables hold real values, so a test submission sends a real email. The production `.env` holds the sitekey and secret key of the site's Turnstile widget, whose hostnames include `tubaishat.com`, and leaves `TURNSTILE_EXPECTED_HOSTNAME` empty.
 
 ## Production
 
@@ -76,4 +76,4 @@ On SIGINT, which PM2 sends to stop or restart the process, or on SIGTERM, the se
 
 ### Logs
 
-PM2 writes the server output to `$HOME/.pm2/logs` and prefixes each line with its date and time. `pm2 logs tubaishat.com` shows it. The contact action logs each outcome without names, email addresses, message text, tokens, IP addresses, or keys: a sent message, a rate-limited submission, a Turnstile token rejected with Siteverify's error codes or "hostname mismatch", and an unavailable Turnstile or Mailgun service with the HTTP status, "timeout", or "network", or with "internal-error" from Turnstile.
+PM2 writes the server output to `$HOME/.pm2/logs` and prefixes each line with its date and time. `pm2 logs tubaishat.com` shows it. The contact action logs each outcome without names, email addresses, message text, tokens, IP addresses, or keys: a sent message; a rate-limited submission; a Turnstile token that Siteverify rejected, with its error codes or "hostname mismatch"; Siteverify unavailable, with the HTTP status, "internal-error", "timeout", or "network"; and a failed Mailgun send, with the HTTP status, "timeout", or "network".
