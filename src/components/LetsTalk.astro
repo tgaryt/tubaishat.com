@@ -1,0 +1,84 @@
+---
+// Let's Talk section: the section heading, the intro, and the direct contact details: the "Direct contact" heading and an address element that holds the six channels, each with its label and link.
+import { profile } from '../data/profile';
+
+const { contact } = profile;
+
+// Returns a web address without its leading "https://", the visible text of the LinkedIn, GitHub, and Instagram links.
+const withoutScheme = (url: string) => url.replace(/^https:\/\//, '');
+
+const channels = [
+	{ label: 'Email', href: `mailto:${contact.email}`, text: contact.email },
+	{ label: 'Phone', href: `tel:${contact.phone}`, text: contact.phoneDisplay },
+	{ label: 'WhatsApp', href: contact.whatsapp, text: 'Message on WhatsApp' },
+	{ label: 'LinkedIn', href: contact.linkedin, text: withoutScheme(contact.linkedin) },
+	{ label: 'GitHub', href: contact.github, text: withoutScheme(contact.github) },
+	{ label: 'Instagram', href: contact.instagram, text: withoutScheme(contact.instagram) }
+];
+---
+
+<section id="contact" class="section" aria-labelledby="contact-heading">
+	<h2 id="contact-heading">Let's Talk</h2>
+	<div>
+		<p class="intro">Tell me about the role, project, or collaboration you have in mind.</p>
+		<h3>Direct contact</h3>
+		<address>
+			<dl>
+				{/* Renders each channel as one row: its label, then its link. */}
+				{
+					channels.map((channel) => (
+						<div class="channel">
+							<dt>{channel.label}</dt>
+							<dd>
+								<a href={channel.href}>{channel.text}</a>
+							</dd>
+						</div>
+					))
+				}
+			</dl>
+		</address>
+	</div>
+</section>
+
+<style>
+	.intro {
+		font-size: var(--text-lg);
+		line-height: 1.45;
+	}
+
+	h3 {
+		margin-top: var(--space-7);
+		color: var(--color-text);
+		font-size: var(--text-xl);
+		font-weight: 600;
+		line-height: 1.15;
+	}
+
+	address {
+		margin-top: var(--space-5);
+		font-style: normal;
+	}
+
+	.channel {
+		padding-block: var(--space-4);
+		border-top: 1px solid var(--color-rule);
+	}
+
+	dt {
+		color: var(--color-text-subtle);
+		font-size: var(--text-sm);
+	}
+
+	a {
+		padding-block: var(--space-1);
+	}
+
+	@media (min-width: 40rem) {
+		.channel {
+			display: grid;
+			grid-template-columns: 10rem 1fr;
+			align-items: baseline;
+			gap: var(--space-5);
+		}
+	}
+</style>

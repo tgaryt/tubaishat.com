@@ -1,8 +1,9 @@
 ---
-// Shared HTML document shell for every page: language, character encoding, viewport, dark color scheme, theme color, page title, optional meta description, the two preloaded self-hosted font families, global styles, skip link, site header, and the main landmark that holds the page content.
+// Shared HTML document shell for every page: language, character encoding, viewport, dark color scheme, theme color, page title, optional meta description, the two preloaded self-hosted font families, global styles, skip link, site header, the main landmark that holds the page content, and site footer.
 import '../styles/global.css';
 import { Font } from 'astro:assets';
 import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
 	title: string;
@@ -30,5 +31,6 @@ const { title, description } = Astro.props;
 		<main id="main" class="container">
 			<slot />
 		</main>
+		<SiteFooter />
 	</body>
 </html>

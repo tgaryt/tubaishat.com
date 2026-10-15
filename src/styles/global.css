@@ -1,4 +1,4 @@
-/* Global styles for every page: the dark color scheme, design tokens, base element styles, links, the focus ring, text selection, the skip link, the layout container, content sections, the primary button, and motion that runs only without a reduced-motion preference. */
+/* Global styles for every page: the dark color scheme, design tokens, base element styles, links, the focus ring, text selection, the skip link, the layout container, content sections, the primary button, the sticky site header from 40rem with the scroll padding that keeps targeted and focused content clear of it, and motion that runs only without a reduced-motion preference. */
 
 :root {
 	color-scheme: dark;
@@ -15,8 +15,10 @@
 	--text-sm: 0.9375rem;
 	--text-base: clamp(1.0625rem, 1.02rem + 0.18vw, 1.125rem);
 	--text-lg: clamp(1.1875rem, 1.1rem + 0.45vw, 1.375rem);
+	--text-xl: clamp(1.375rem, 1.25rem + 0.6vw, 1.625rem);
 	--text-2xl: clamp(2.25rem, 1.7rem + 2.4vw, 3.5rem);
 	--text-display: clamp(3.25rem, 1.9rem + 6vw, 7.5rem);
+	--space-1: 0.25rem;
 	--space-2: 0.5rem;
 	--space-3: 0.75rem;
 	--space-4: 1rem;
@@ -88,6 +90,7 @@ a:focus-visible {
 	position: absolute;
 	top: var(--space-3);
 	left: var(--space-3);
+	z-index: 2;
 	padding: var(--space-3) var(--space-5);
 	border-radius: var(--radius);
 	background-color: var(--color-accent);
@@ -129,6 +132,20 @@ a:focus-visible {
 .button:hover,
 .button:focus-visible {
 	background-color: var(--color-accent-strong);
+}
+
+@media (min-width: 40rem) {
+	html {
+		scroll-padding-top: 5rem;
+	}
+
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		border-bottom: 1px solid var(--color-rule);
+		background-color: var(--color-bg);
+	}
 }
 
 @media (min-width: 64rem) {

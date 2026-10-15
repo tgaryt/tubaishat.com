@@ -1,8 +1,11 @@
 ---
-// Home page, built to index.html: the page title and meta description, and the Hero and About sections in page order.
+// Home page, built to index.html: the page title and meta description, and the five content sections in page order.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import LetsTalk from '../components/LetsTalk.astro';
 import { profile } from '../data/profile';
 ---
 
@@ -12,4 +15,7 @@ import { profile } from '../data/profile';
 >
 	<Hero />
 	<About />
+	<Experience />
+	<Skills />
+	<LetsTalk />
 </BaseLayout>

@@ -1,0 +1,207 @@
+---
+// Experience section: the section heading and the career timeline, most recent role first, with one line that connects the role nodes; each role shows its company, the current-role badge where its period ends in Present, title, employment type, location, period, responsibilities, and technologies.
+import { profile } from '../data/profile';
+---
+
+<section id="experience" class="section" aria-labelledby="experience-heading">
+	<h2 id="experience-heading">Experience</h2>
+	<ol class="timeline">
+		{/* Renders each role as one timeline entry, in feed order (most recent first), marking the role whose period ends in Present as current. */}
+		{
+			profile.experience.map((role) => {
+				const current = role.end.text === 'Present';
+				return (
+					<li class:list={['role', { current }]}>
+						<div class="role-header">
+							<div>
+								<div class="company">
+									<h3>{role.company}</h3>
+									{current && <p class="badge">Current role</p>}
+								</div>
+								<p class="title">{role.title}</p>
+								<p class="meta">
+									<span>{role.employmentType}</span> <span>{role.location}</span>
+								</p>
+							</div>
+							<p class="period">
+								<time datetime={role.start.datetime}>{role.start.text}</time>
+								{' - '}
+								{'datetime' in role.end ? <time datetime={role.end.datetime}>{role.end.text}</time> : role.end.text}
+							</p>
+						</div>
+						<p class="label">Responsibilities</p>
+						<ul class="responsibilities">
+							{/* Renders each responsibility as a list item. */}
+							{role.responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+						</ul>
+						<p class="label">Technologies</p>
+						<ul class="tags">
+							{/* Renders each technology as a list item shown as an outlined tag. */}
+							{role.technologies.map((technology) => <li>{technology}</li>)}
+						</ul>
+					</li>
+				);
+			})
+		}
+	</ol>
+</section>
+
+<style>
+	.timeline {
+		padding: 0;
+		list-style: none;
+	}
+
+	.role {
+		position: relative;
+		padding-left: 2rem;
+	}
+
+	.role:not(:last-child) {
+		padding-bottom: 3.5rem;
+	}
+
+	h3 {
+		color: var(--color-text);
+		font-size: var(--text-xl);
+		font-weight: 600;
+		line-height: 1.15;
+	}
+
+	.role:not(:last-child) h3::before {
+		content: "";
+		position: absolute;
+		top: calc(1lh / 2);
+		left: 0.4375rem;
+		width: 1px;
+		height: 100%;
+		background-color: var(--color-rule-strong);
+	}
+
+	h3::after {
+		content: "";
+		position: absolute;
+		top: calc((1lh - 0.875rem) / 2);
+		left: 0;
+		width: 0.875rem;
+		height: 0.875rem;
+		border: 2px solid var(--color-text-subtle);
+		border-radius: 50%;
+		background-color: var(--color-bg);
+	}
+
+	.current h3::after {
+		border-color: var(--color-accent);
+		background-color: var(--color-accent);
+		box-shadow: 0 0 0 0.25rem var(--color-bg);
+	}
+
+	.role-header {
+		display: grid;
+		gap: var(--space-2);
+	}
+
+	.company {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2) var(--space-3);
+	}
+
+	.badge {
+		padding-inline: var(--space-2);
+		border: 1px solid var(--color-accent);
+		border-radius: 999px;
+		color: var(--color-accent);
+		font-size: var(--text-xs);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.title {
+		margin-top: var(--space-2);
+		color: var(--color-text);
+		font-weight: 500;
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		color: var(--color-text-subtle);
+		font-size: var(--text-sm);
+	}
+
+	.meta span + span {
+		margin-left: var(--space-3);
+		padding-left: var(--space-3);
+		border-left: 1px solid var(--color-rule-strong);
+	}
+
+	.period {
+		color: var(--color-text-subtle);
+		font-size: var(--text-sm);
+	}
+
+	.label {
+		margin-top: var(--space-6);
+		color: var(--color-text-subtle);
+		font-size: var(--text-xs);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.responsibilities {
+		max-width: 66ch;
+		margin-top: var(--space-3);
+		padding: 0;
+		list-style: none;
+	}
+
+	.responsibilities li {
+		display: flex;
+		gap: var(--space-3);
+	}
+
+	.responsibilities li + li {
+		margin-top: var(--space-2);
+	}
+
+	.responsibilities li::before {
+		content: "";
+		flex: none;
+		width: 0.75rem;
+		height: 1px;
+		margin-top: calc((1lh - 1px) / 2);
+		background-color: var(--color-rule-strong);
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-top: var(--space-3);
+		padding: 0;
+		list-style: none;
+	}
+
+	.tags li {
+		padding: var(--space-1) var(--space-3);
+		border: 1px solid var(--color-rule-strong);
+		border-radius: var(--radius);
+		font-size: var(--text-sm);
+	}
+
+	@media (min-width: 40rem) {
+		.role {
+			padding-left: 2.5rem;
+		}
+	}
+
+	@media (min-width: 48rem) {
+		.role-header {
+			grid-template-columns: 1fr auto;
+			align-items: baseline;
+			gap: var(--space-6);
+		}
+	}
+</style>

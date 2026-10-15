@@ -1,4 +1,4 @@
-// Portfolio content reproduced exactly from feed.txt, the single source of that content for the site header, the Hero and About sections, and the home page title.
+// Portfolio content reproduced exactly from feed.txt, plus the machine-readable month of each role date: the single source of that content for the site header and footer, the five page sections, and the home page title.
 export const profile = {
 	name: 'Rayyan Tubaishat',
 	professionalTitle: 'Full Stack Developer',
@@ -19,5 +19,56 @@ export const profile = {
 			{ label: 'Projects completed', value: '29+' },
 			{ label: 'Education', value: 'Bachelor of Computer Information Systems (Expected 2027)' }
 		]
+	},
+	experience: [
+		{
+			company: 'EZ-AD TV, Inc.',
+			title: 'Full Stack Developer',
+			employmentType: 'Full-time',
+			location: 'Remote',
+			start: { text: 'May 2025', datetime: '2025-05' },
+			end: { text: 'Present' },
+			responsibilities: [
+				'Design and build full systems from the ground up, including subscription billing, payment processing (Stripe), admin dashboards, and client-facing portals',
+				'Own and maintain internal company platforms used daily by employees, handling feature requests, bug fixes, and improvements',
+				'Integrate AI services into production workflows for automated content generation, document processing, and intelligent automation',
+				'Build multilingual automated publishing pipelines and data-driven reporting tools',
+				'Develop financial reconciliation systems with third-party accounting API integrations',
+				'Create data pipelines connecting external APIs (Google Search Console, Slack, Google Cloud Storage) to internal platforms',
+				'Manage full deployment lifecycle including server configuration, database migrations, and production monitoring'
+			],
+			technologies: ['PHP', 'JavaScript', 'TypeScript', 'Vue', 'Node.js', 'MySQL', 'HTML', 'CSS', 'Git']
+		},
+		{
+			company: 'UGC-Gaming.NET',
+			title: 'Full Stack Developer',
+			employmentType: 'Full-time',
+			location: 'Remote',
+			start: { text: 'January 2023', datetime: '2023-01' },
+			end: { text: 'May 2025', datetime: '2025-05' },
+			responsibilities: [
+				'Developed and maintained internal tools and systems, enhancing efficiency across all departments',
+				'Built a complete staff area system from scratch, improving task management and operational workflow',
+				'Managed server infrastructure including server configuration, SSL certificates, and DNS handling with automated deployments',
+				'Modernized company websites with clean code following MVC patterns, resulting in 40% improved performance',
+				'Led technical team implementing agile methodologies for smooth project delivery'
+			],
+			technologies: ['PHP', 'JavaScript', 'SQL', 'Git']
+		}
+	],
+	skills: [
+		{ name: 'Languages', items: ['PHP', 'JavaScript', 'TypeScript', 'SQL'] },
+		{ name: 'Frontend', items: ['HTML', 'CSS', 'Tailwind CSS', 'React'] },
+		{ name: 'Backend', items: ['Node.js', 'MySQL', 'REST APIs'] },
+		{ name: 'Tools and systems', items: ['Git', 'Composer', 'Linux'] }
+	],
+	contact: {
+		email: 'ba8lawa2023@gmail.com',
+		phone: '+962795945090',
+		phoneDisplay: '+962 7 9594 5090',
+		whatsapp: 'https://wa.me/962795945090',
+		github: 'https://github.com/tgaryt',
+		linkedin: 'https://linkedin.com/in/ry-tubaishat',
+		instagram: 'https://www.instagram.com/ryt.tbaishat'
 	}
 } as const;
