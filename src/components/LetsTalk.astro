@@ -5,16 +5,16 @@ import { profile } from '../data/profile';
 
 const { contact } = profile;
 
-// Returns a web address without its leading "https://", the visible text of the LinkedIn, GitHub, and Instagram links.
-const withoutScheme = (url: string) => url.replace(/^https:\/\//, '');
+// Returns a web address without its leading "https://" or the "www." that may follow it: the visible text of the LinkedIn, GitHub, and Instagram links.
+const displayAddress = (url: string) => url.replace(/^https:\/\/(?:www\.)?/, '');
 
 const channels = [
 	{ label: 'Email', href: `mailto:${contact.email}`, text: contact.email },
 	{ label: 'Phone', href: `tel:${contact.phone}`, text: contact.phoneDisplay },
 	{ label: 'WhatsApp', href: contact.whatsapp, text: 'Message on WhatsApp' },
-	{ label: 'LinkedIn', href: contact.linkedin, text: withoutScheme(contact.linkedin) },
-	{ label: 'GitHub', href: contact.github, text: withoutScheme(contact.github) },
-	{ label: 'Instagram', href: contact.instagram, text: withoutScheme(contact.instagram) }
+	{ label: 'LinkedIn', href: contact.linkedin, text: displayAddress(contact.linkedin) },
+	{ label: 'GitHub', href: contact.github, text: displayAddress(contact.github) },
+	{ label: 'Instagram', href: contact.instagram, text: displayAddress(contact.instagram) }
 ];
 ---
 
@@ -82,6 +82,7 @@ const channels = [
 
 	a {
 		padding-block: var(--space-1);
+		overflow-wrap: anywhere;
 	}
 
 	@media (min-width: 40rem) {

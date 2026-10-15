@@ -2,7 +2,7 @@
 import { Buffer } from 'node:buffer';
 import { CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL, MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_REGION } from 'astro:env/server';
 
-export interface ContactMessage {
+interface ContactMessage {
 	name: string;
 	email: string;
 	message: string;

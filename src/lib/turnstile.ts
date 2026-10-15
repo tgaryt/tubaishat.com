@@ -7,7 +7,7 @@ interface SiteverifyResult {
 	'error-codes'?: string[];
 }
 
-export type TurnstileVerdict = { outcome: 'valid' } | { outcome: 'rejected' | 'unavailable'; reason: string };
+type TurnstileVerdict = { outcome: 'valid' } | { outcome: 'rejected' | 'unavailable'; reason: string };
 
 const siteverifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
