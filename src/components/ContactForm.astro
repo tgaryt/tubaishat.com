@@ -64,7 +64,6 @@ import { contactFields } from '../lib/contact-fields';
 	}
 
 	label {
-		color: var(--color-text-muted);
 		font-size: var(--text-sm);
 		font-weight: 500;
 	}
@@ -232,7 +231,7 @@ import { contactFields } from '../lib/contact-fields';
 		return '';
 	}
 
-	// Shows the error message of each field from the given lookup, removes the others, marks invalid fields with aria-invalid, and moves focus to the first one; returns whether any field is invalid.
+	// Shows each field's error message from the given lookup and clears it for each valid field, sets aria-invalid on the invalid fields and removes it from the valid ones, and moves focus to the first invalid field; returns whether any field is invalid.
 	function showErrors(errorOf: (field: Field) => string): boolean {
 		let firstInvalid: Field | undefined;
 		for (const field of fields) {

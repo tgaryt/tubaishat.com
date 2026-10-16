@@ -1,4 +1,4 @@
-// Admission of contact submissions in this single server process: the visitor's IP address, the per-visitor and global rate limits over fixed 60-minute windows, the count of submissions in flight, and, in production builds, a graceful shutdown on SIGINT and SIGTERM that stops admitting submissions and exits once none is in flight.
+// Admission of contact submissions in this single server process: the visitor's IP address, the per-visitor and global rate limits over fixed 60-minute windows, the count of submissions in flight, and, in production builds, a graceful shutdown on SIGINT and SIGTERM that stops admitting submissions and ends the process after the submissions in flight have settled.
 import process from 'node:process';
 import type { ActionAPIContext } from 'astro:actions';
 
