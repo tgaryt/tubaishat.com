@@ -6,16 +6,17 @@ import { profile } from '../data/profile';
 <section id="experience" class="section" aria-labelledby="experience-heading">
 	<h2 id="experience-heading">Experience</h2>
 	<ol class="timeline">
-		{/* Renders each role as one timeline entry, in feed order (most recent first), marking the role whose period ends in Present as current. */}
+		{/* Renders each role as one timeline entry, in feed order (most recent first), and marks the role whose period ends in Present as current; each entry is named by its company heading through aria-labelledby, because Edge otherwise gives a list item all of its text as its UI Automation name, which Narrator reads before the heading. */}
 		{
-			profile.experience.map((role) => {
+			profile.experience.map((role, index) => {
 				const current = role.end.text === 'Present';
+				const headingId = `role-${index + 1}-heading`;
 				return (
-					<li class:list={['role', { current }]}>
+					<li class:list={['role', { current }]} aria-labelledby={headingId}>
 						<div class="role-header">
 							<div>
 								<div class="company">
-									<h3>{role.company}</h3>
+									<h3 id={headingId}>{role.company}</h3>
 									{current && <p class="badge">Current role</p>}
 								</div>
 								<p class="title">{role.title}</p>
