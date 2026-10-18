@@ -57,7 +57,7 @@ export const profile = {
 		}
 	],
 	skills: [
-		{ name: 'Languages', items: ['PHP', 'JavaScript', 'TypeScript', 'SQL'] },
+		{ name: 'Languages', items: ['PHP', 'JavaScript', 'TypeScript', 'Python', 'SQL'] },
 		{ name: 'Frontend', items: ['HTML', 'CSS', 'Tailwind CSS', 'React'] },
 		{ name: 'Backend', items: ['Node.js', 'MySQL', 'REST APIs'] },
 		{ name: 'Tools and systems', items: ['Git', 'Composer', 'Linux'] }
