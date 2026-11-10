@@ -1,11 +1,11 @@
 ---
-// Let's Talk section: the section heading, the intro, the contact form, and the direct contact details: the "Direct contact" heading and an address element that holds the six channels, each with its label and link; the form comes first, and from 64rem the form and the direct contact details are side by side.
+// Let's Talk section: the contact form and the direct contact details.
 import ContactForm from './ContactForm.astro';
 import { profile } from '../data/profile';
 
 const { contact } = profile;
 
-// Returns a web address without its leading "https://" or the "www." that may follow it: the visible text of the LinkedIn, GitHub, and Instagram links.
+// Removes the leading "https://" and an optional "www." from a URL, for display.
 const displayAddress = (url: string) => url.replace(/^https:\/\/(?:www\.)?/, '');
 
 const channels = [
@@ -28,7 +28,7 @@ const channels = [
 				<h3>Direct contact</h3>
 				<address>
 					<dl>
-						{/* Renders each channel as one row: its label, then its link. */}
+						{/* Renders each channel as a label and link. */}
 						{
 							channels.map((channel) => (
 								<div class="channel">

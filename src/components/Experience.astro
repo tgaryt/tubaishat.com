@@ -1,12 +1,12 @@
 ---
-// Experience section: the section heading and the career timeline, most recent role first, with one line that connects the role nodes; each role shows its company, the current-role badge where its period ends in Present, title, employment type, location, period, responsibilities, and technologies.
+// Experience section: the roles as a timeline.
 import { profile } from '../data/profile';
 ---
 
 <section id="experience" class="section" aria-labelledby="experience-heading">
 	<h2 id="experience-heading">Experience</h2>
 	<ol class="timeline">
-		{/* Renders each role as one timeline entry, in feed order (most recent first), and marks the role whose period ends in Present as current; each entry is named by its company heading through aria-labelledby, because Edge otherwise gives a list item all of its text as its UI Automation name, which Narrator reads before the heading. */}
+		{/* Renders each role as a timeline entry named by its company heading, and marks the role that ends in Present as current. */}
 		{
 			profile.experience.map((role, index) => {
 				const current = role.end.text === 'Present';
@@ -37,7 +37,7 @@ import { profile } from '../data/profile';
 						</ul>
 						<p class="label">Technologies</p>
 						<ul class="tags">
-							{/* Renders each technology as a list item shown as an outlined tag. */}
+							{/* Renders each technology as a tag. */}
 							{role.technologies.map((technology) => <li>{technology}</li>)}
 						</ul>
 					</li>

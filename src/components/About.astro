@@ -1,5 +1,5 @@
 ---
-// About section: the section heading, the summary lead, the body paragraphs, and the projects and education facts.
+// About section: summary, paragraphs, and facts.
 import { profile } from '../data/profile';
 ---
 
@@ -7,10 +7,10 @@ import { profile } from '../data/profile';
 	<h2 id="about-heading">About</h2>
 	<div>
 		<p class="lead">{profile.about.lead}</p>
-		{/* Renders each About body paragraph, in feed order. */}
+		{/* Renders each body paragraph. */}
 		{profile.about.body.map((paragraph) => <p>{paragraph}</p>)}
 		<dl>
-			{/* Renders each fact as one row: its label, then its value. */}
+			{/* Renders each fact as a label and value. */}
 			{
 				profile.about.facts.map((fact) => (
 					<div class="fact">

@@ -1,4 +1,4 @@
-// Sends contact messages through the Mailgun Messages API as plain text, with the visitor's address as Reply-To and click and open tracking off; each message gets one attempt with a 10-second timeout and no retry, because the API has no idempotency parameter for sends and a retry could deliver the message twice.
+// Sends contact messages through the Mailgun Messages API.
 import { Buffer } from 'node:buffer';
 import { CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL, MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_REGION } from 'astro:env/server';
 
@@ -10,7 +10,7 @@ interface ContactMessage {
 
 const apiBase = { us: 'https://api.mailgun.net', eu: 'https://api.eu.mailgun.net' };
 
-// Sends one contact message and returns undefined when Mailgun accepts it with HTTP 200, otherwise the failure: the HTTP status, "timeout", or "network" for any other failure of the request.
+// Sends one message with a 10-second timeout and no retry; returns undefined on HTTP 200, otherwise the failure reason.
 export async function sendContactMessage({ name, email, message }: ContactMessage): Promise<string | undefined> {
 	const body = new FormData();
 	body.set('from', `"tubaishat.com contact form" <${CONTACT_FROM_EMAIL}>`);

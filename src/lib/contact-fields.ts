@@ -1,4 +1,4 @@
-// Rules of the contact form fields, shared by the form, its script, and the contact action so that the browser and the server check the same limits and show the same messages: each field's maximum length in characters and its error messages, and the C0 control characters and DEL that a name must not contain.
+// Contact form field limits, error messages, and the characters a name must not contain, shared by the form, its script, and the contact action.
 export const contactFields = {
 	name: {
 		maxLength: 100,

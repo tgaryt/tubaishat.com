@@ -1,4 +1,4 @@
-// Verifies Cloudflare Turnstile tokens with the Siteverify API: a token is valid only when Siteverify reports success for the expected hostname, and one retry with the same idempotency key follows a timeout, any other failure of the request or its response, an HTTP 5xx status, or an internal-error result.
+// Verifies Cloudflare Turnstile tokens with the Siteverify API.
 import { TURNSTILE_EXPECTED_HOSTNAME, TURNSTILE_SECRET_KEY } from 'astro:env/server';
 
 interface SiteverifyResult {
@@ -11,7 +11,7 @@ type TurnstileVerdict = { outcome: 'valid' } | { outcome: 'rejected' | 'unavaila
 
 const siteverifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
-// Sends one Siteverify request with a 5-second timeout and returns its verdict, marked transient when a retry could succeed; the reason of an unavailable verdict is the HTTP status, "internal-error", "timeout", or "network" for any other failure of the request or its response.
+// Sends one Siteverify request with a 5-second timeout; returns the verdict and whether a retry could succeed.
 async function requestVerdict(body: URLSearchParams): Promise<{ verdict: TurnstileVerdict; transient: boolean }> {
 	try {
 		const response = await fetch(siteverifyUrl, { method: 'POST', body, signal: AbortSignal.timeout(5000) });
@@ -36,7 +36,7 @@ async function requestVerdict(body: URLSearchParams): Promise<{ verdict: Turnsti
 	}
 }
 
-// Verifies a widget token together with the visitor's IP address, retrying once with the same idempotency key when the first verdict is transient.
+// Verifies a widget token with the visitor's IP address, retrying once with the same idempotency key after a transient failure.
 export async function verifyTurnstile(token: string, remoteIp: string): Promise<TurnstileVerdict> {
 	const body = new URLSearchParams({ secret: TURNSTILE_SECRET_KEY, response: token, remoteip: remoteIp, idempotency_key: crypto.randomUUID() });
 	const first = await requestVerdict(body);

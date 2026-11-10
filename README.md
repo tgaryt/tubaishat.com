@@ -1,4 +1,4 @@
-<!-- Repository guide for the tubaishat.com portfolio: the stack, the repository layout and build output, requirements, commands, environment variables, local testing, production (setup, updates, PM2, the Nginx server block in tubaishat.com.conf, the Cloudflare and Mailgun settings, the runtime contract, shutdown, and logs), and how the contact form handles a message. -->
+<!-- Repository guide for tubaishat.com: stack, layout, requirements, commands, environment variables, local testing, production, and the contact form. -->
 
 # tubaishat.com
 
@@ -11,18 +11,18 @@ The site is built with Astro. Both pages are prerendered at build time and serve
 | Path | Contents |
 | --- | --- |
 | `src/pages/index.astro` | The home page: its title, description, canonical URL, Open Graph metadata, WebSite structured data, and the five sections in page order |
-| `src/pages/404.astro` | The error page, which the server sends with status 404 for every unknown URL |
-| `src/layouts/BaseLayout.astro` | The document shell of both pages: head elements, icons, preloaded fonts, skip link, site header, main content, and site footer |
+| `src/pages/404.astro` | The not-found page, which the server sends with status 404 |
+| `src/layouts/BaseLayout.astro` | The document shell of both pages: head elements, icons, preloaded fonts, global styles, skip link, site header, main content, and site footer |
 | `src/components/` | `SiteHeader.astro` and `SiteFooter.astro`; the sections `Hero.astro`, `About.astro`, `Experience.astro`, `Skills.astro`, and `LetsTalk.astro`; and `ContactForm.astro`, with the script that checks and sends the form |
 | `src/data/profile.ts` | The portfolio content: name, professional title, location, hero text, About text and facts, experience, skills, and contact channels |
 | `src/actions/index.ts` | The contact action: field validation, rate limits, Turnstile verification, and the Mailgun send |
-| `src/lib/contact-fields.ts` | Field limits and error messages, shared by the form, its script, and the contact action |
+| `src/lib/contact-fields.ts` | Field limits, error messages, and the characters a name must not contain, shared by the form, its script, and the contact action |
 | `src/lib/submission-guard.ts` | The visitor's IP address, the rate limits, the count of submissions in flight, and the graceful shutdown |
 | `src/lib/turnstile.ts` | Token verification with the Turnstile Siteverify API |
 | `src/lib/mailgun.ts` | The send through the Mailgun Messages API |
 | `src/styles/global.css` | Design tokens and the styles shared by every page |
 | `public/` | `robots.txt`, `favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, and `og-image.png`, copied unchanged into the build |
-| `astro.config.mjs` | Astro configuration: site address, Node.js adapter and listen address, sitemap, fonts, Content Security Policy, request checks of the contact action, and the schema of the environment variables |
+| `astro.config.mjs` | Astro configuration: site address, Node.js adapter, sitemap, sessions off, no image processing, no Markdown syntax highlighting, listen address, security settings (Content Security Policy, allowed domains, and action body size limit), fonts, the environment variable schema, and secret validation |
 | `ecosystem.config.cjs` | PM2 process file for production |
 | `tubaishat.com.conf` | Nginx server block for production |
 | `.env.example` | The environment variables with their purposes, without values |
@@ -35,8 +35,8 @@ The site is built with Astro. Both pages are prerendered at build time and serve
 
 ## Requirements
 
-- Node.js 24 LTS, version 24.11.0 or later
-- npm 11 or later
+- Node.js 24.22.2 or later
+- npm 11.19.1 or later, the version that comes with Node.js 24.22.2
 
 `package.json` sets these minimums in `devEngines`; npm checks them before `install`, `ci`, and `run` and stops with an error when a version is lower.
 
@@ -76,7 +76,7 @@ Run every command from the repository root.
 
 ## Local testing
 
-The site's Turnstile widget works only on its listed hostnames, so local testing uses Cloudflare's test keys: the test sitekey and secret key that always pass, and `example.com`, the hostname that Turnstile reports for tokens validated with a test secret key. With these lines in the local `.env`, the form works on `http://127.0.0.1:4321`:
+The site's Turnstile widget works only on the hostnames listed for it and their subdomains, so local testing uses Cloudflare's test keys: the test sitekey and secret key that always pass, and `example.com`, the hostname that Turnstile reports for tokens validated with a test secret key. With these lines in the local `.env`, the form works on `http://127.0.0.1:4321`:
 
 ```
 TURNSTILE_SITE_KEY=1x00000000000000000000AA
@@ -96,7 +96,7 @@ Requests reach the site through Cloudflare, Nginx, and the Astro server:
 
 ### Setup
 
-On the server, with Node.js 24 LTS, npm, and PM2 installed, create `.env` in the repository directory from `.env.example` with the production values: the sitekey and secret key of the site's Turnstile widget, an empty `TURNSTILE_EXPECTED_HOSTNAME`, and the real Mailgun and contact values. Then install, build, and start the site:
+On the server, with the required Node.js and npm versions and PM2 installed, create `.env` in the repository directory from `.env.example` with the production values: the sitekey and secret key of the site's Turnstile widget, an empty `TURNSTILE_EXPECTED_HOSTNAME`, and the real Mailgun and contact values. Then install, build, and start the site:
 
 ```sh
 npm ci
@@ -135,7 +135,7 @@ The build empties `dist/` before it writes the new files, so the running site ca
 
 - It listens on port 443 with TLS, on IPv4 and IPv6, for the host name `tubaishat.com`.
 - It uses the Cloudflare Origin CA certificate `/etc/ssl/tubaishat.com/origin.pem` and its private key `/etc/ssl/tubaishat.com/origin.key`.
-- It passes every request, with its URI unchanged, to `http://127.0.0.1:4321`. `proxy_set_header Host $host` keeps the original `Host` header, which Nginx would otherwise replace with `127.0.0.1:4321`; the other request headers, including `CF-Connecting-IP` and `X-Forwarded-Proto`, pass unchanged.
+- It passes every request, with its URI unchanged, to `http://127.0.0.1:4321`. `proxy_set_header Host $host` sends the request's host name, `tubaishat.com`, as the `Host` header, which Nginx would otherwise set to `127.0.0.1:4321`; the `CF-Connecting-IP` and `X-Forwarded-Proto` headers from Cloudflare pass unchanged.
 - It keeps two Nginx defaults that suit the site: `client_max_body_size` 1 MB, above the 64 KiB limit of the contact action, and `proxy_read_timeout` 60 seconds, above the longest run of the contact action, about 20 seconds (two Turnstile attempts of up to 5 seconds and one Mailgun attempt of up to 10 seconds).
 
 To install it on the server:
@@ -168,7 +168,7 @@ Mailgun sends from the domain in `MAILGUN_DOMAIN`, in the region in `MAILGUN_REG
 ### Runtime contract
 
 - The server listens on `127.0.0.1`, port `4321`. The `HOST` and `PORT` environment variables override the address and the port when the server starts; an empty `HOST` makes it listen on all network interfaces.
-- The reverse proxy in front of the server passes the original `Host` header (`tubaishat.com`) and the `X-Forwarded-Proto` and `CF-Connecting-IP` headers that Cloudflare adds. Astro trusts `Host` and `X-Forwarded-Proto` only when they describe `https://tubaishat.com`, which keeps its check that form submissions come from the site itself correct behind the proxy, and the per-visitor rate limit counts submissions per `CF-Connecting-IP` address.
+- The reverse proxy in front of the server sends the `Host` header `tubaishat.com` and passes the `X-Forwarded-Proto` and `CF-Connecting-IP` headers that Cloudflare adds. Astro uses `Host` and `X-Forwarded-Proto` only when they match `allowedDomains` in `astro.config.mjs` (`tubaishat.com` over `https`), so request URLs are `https://tubaishat.com/...` behind the proxy. The per-visitor rate limit counts submissions per `CF-Connecting-IP` address.
 - The rate limits and the count of submissions in flight are kept in memory, so the site runs as exactly one process.
 
 ### Shutdown
@@ -183,8 +183,8 @@ PM2 writes the server output to `$HOME/.pm2/logs`; `pm2 logs tubaishat.com` show
 
 1. The browser checks the fields with the limits and messages that the server uses: a name of up to 100 characters with no C0 control character or DEL, an email address of up to 254 characters in the HTML email syntax, and a message of up to 5000 characters, all required.
 2. The first interaction with the form loads the Turnstile widget in its dark theme; a submission waits for its token.
-3. The script sends the fields and the token to the contact action at `/_actions/contact`. Before the action runs, Astro rejects cross-site form submissions (403), bodies over 64 KiB (413), and bodies that are not form data (415); invalid fields return 400 with a message for each invalid field.
+3. The script sends the fields and the token to the contact action at `/_actions/contact`. Before the action runs, Astro rejects cross-origin form submissions (403), bodies over 64 KiB (413), and bodies that are not form data (415); invalid fields return 400 with a message for each invalid field.
 4. The action refuses submissions during a shutdown (503) and above the rate limits (429): 5 per visitor IP address and 30 in total, each per fixed 60-minute window. Rate limits count every submission with valid fields, before Turnstile.
-5. It verifies the token with Siteverify, with a 5-second timeout, and once more with the same idempotency key after a timeout, a network failure, an HTTP 5xx status, or an internal-error result. A rejected token or a hostname other than the expected one returns 403, and Siteverify unavailable returns 503.
-6. It sends the message through Mailgun as plain text from "tubaishat.com contact form" at `CONTACT_FROM_EMAIL` to `CONTACT_TO_EMAIL`, with the subject "Portfolio message from" and the name, the visitor's address as Reply-To, and click and open tracking off. The send has a 10-second timeout and no retry, because Mailgun's send API has no idempotency parameter and a retry could deliver the message twice. Mailgun's acceptance returns 204, and any failure 503.
+5. It verifies the token with Siteverify, with a 5-second timeout, and once more with the same idempotency key after a timeout, any other failure of the request or its response, an HTTP 5xx status, or an internal-error result. A rejected token or a hostname other than the expected one returns 403, and Siteverify unavailable returns 503.
+6. It sends the message through Mailgun as plain text from "tubaishat.com contact form" at `CONTACT_FROM_EMAIL` to `CONTACT_TO_EMAIL`, with the subject "Portfolio message from" and the name, the visitor's address as Reply-To, and click and open tracking off. The send has a 10-second timeout and no retry, because a retried send could deliver the message twice. Mailgun's acceptance returns 204, and any failure 503.
 7. The form shows the result, clears the fields only after success, and resets the widget after every attempt, because each token can be validated only once.

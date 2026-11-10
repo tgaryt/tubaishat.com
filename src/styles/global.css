@@ -1,4 +1,4 @@
-/* Global styles for every page: the dark color scheme, design tokens, base element styles, links, the focus ring, text selection, the skip link, the layout container, content sections, the primary button, the sticky site header from 40rem with the scroll padding that keeps targeted and focused content clear of it, and motion that runs only without a reduced-motion preference. */
+/* Global styles: design tokens and the styles shared by every page. */
 
 :root {
 	color-scheme: dark;

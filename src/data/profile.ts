@@ -1,4 +1,4 @@
-// Portfolio content reproduced exactly from feed.txt, plus the machine-readable month of each role date, used by the site header and footer, the five page sections, and the title, Open Graph metadata, and structured data of the home page.
+// Portfolio content shown on the site.
 export const profile = {
 	name: 'Rayyan Tubaishat',
 	professionalTitle: 'Full Stack Developer',

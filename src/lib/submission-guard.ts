@@ -1,4 +1,4 @@
-// Admission of contact submissions in this single server process: the visitor's IP address, the per-visitor and global rate limits over fixed 60-minute windows, the count of submissions in flight, and, in production builds, a graceful shutdown on SIGINT and SIGTERM that stops admitting submissions and ends the process after the submissions in flight have settled.
+// Visitor IP address, rate limits, in-flight count, and graceful shutdown for contact submissions in this server process.
 import process from 'node:process';
 import type { ActionAPIContext } from 'astro:actions';
 
@@ -17,17 +17,17 @@ let globalWindow: RateWindow | undefined;
 let inFlight = 0;
 let draining = false;
 
-// Returns the visitor's IP address: the CF-Connecting-IP header that Cloudflare adds, else the address Astro resolved for the request.
+// Returns the visitor's IP address: Cloudflare's CF-Connecting-IP header, else the client address that Astro resolved.
 export function visitorAddress(context: ActionAPIContext): string {
 	return context.request.headers.get('cf-connecting-ip') || context.clientAddress;
 }
 
-// Reports whether a shutdown has started, after which no submission is admitted.
+// Reports whether a shutdown has started.
 export function isDraining(): boolean {
 	return draining;
 }
 
-// Prunes the windows that started 60 or more minutes ago, then counts a submission from the given address against the per-visitor and global limits; returns false, counting nothing, when either limit is already reached.
+// Counts a submission against the per-visitor and global limits; returns false, counting nothing, when either limit is already reached.
 export function admitUnderRateLimits(address: string): boolean {
 	const now = Date.now();
 	for (const [key, rateWindow] of visitorWindows) {
@@ -55,7 +55,7 @@ export function admitUnderRateLimits(address: string): boolean {
 	return true;
 }
 
-// Runs an admitted submission and counts it as in flight until it settles; during a shutdown, the process exits 1000 ms after the last submission in flight settles, which leaves time to write its response.
+// Runs a submission while counting it as in flight; during a shutdown, the process exits 1 second after the last one settles.
 export async function trackInFlight(submission: () => Promise<void>): Promise<void> {
 	inFlight += 1;
 	try {
@@ -73,7 +73,7 @@ function exit(): void {
 	process.exit(0);
 }
 
-// Starts the shutdown once: stops admitting submissions and writes the number in flight to standard output; with none in flight, the process exits as soon as that line has been written, because an exit can discard output that is still being written.
+// Starts the shutdown once: stops admitting submissions, logs how many are in flight, and ends the process once that line is written if none are.
 function drain(): void {
 	if (draining) {
 		return;

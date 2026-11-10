@@ -1,5 +1,5 @@
 ---
-// Contact form of the Let's Talk section: the "Send a message" heading, the instruction, the notice shown without JavaScript, the name, email, and message fields with the message hint and the error messages, the slot where the Cloudflare Turnstile widget appears after the first interaction with the form, the submit button with the status region, and the privacy note; its script checks the fields, waits for a Turnstile token, and sends the form to the contact action.
+// Contact form with the Turnstile widget; its script checks the fields and sends them to the contact action.
 import { contactFields } from '../lib/contact-fields';
 ---
 
@@ -212,7 +212,7 @@ import { contactFields } from '../lib/contact-fields';
 	let waiting = false;
 	let pending = false;
 
-	// Returns the error message for a field's trimmed value, or an empty string when it is valid: the checks of the contact action, with the browser's email syntax check.
+	// Returns a field's error message, or an empty string when the field is valid.
 	function fieldError(field: Field): string {
 		const rules = contactFields[field.name as keyof typeof contactFields];
 		const value = field.value.trim();
@@ -231,7 +231,7 @@ import { contactFields } from '../lib/contact-fields';
 		return '';
 	}
 
-	// Shows each field's error message from the given lookup and clears it for each valid field, sets aria-invalid on the invalid fields and removes it from the valid ones, and moves focus to the first invalid field; returns whether any field is invalid.
+	// Shows each field's error, marks the invalid fields with aria-invalid, and focuses the first one; returns whether any field is invalid.
 	function showErrors(errorOf: (field: Field) => string): boolean {
 		let firstInvalid: Field | undefined;
 		for (const field of fields) {
@@ -248,13 +248,13 @@ import { contactFields } from '../lib/contact-fields';
 		return firstInvalid !== undefined;
 	}
 
-	// Shows a message in the status region; its tone sets the text color.
+	// Shows a message in the status region with the given tone.
 	function showStatus(message: string, tone: Tone) {
 		status.textContent = message;
 		status.dataset.tone = tone;
 	}
 
-	// Ends the pending state, so that the button is available again and reads "Send message", and shows the message in the status region.
+	// Ends the pending submission and shows its result.
 	function finish(message: string, tone: Tone) {
 		pending = false;
 		button.removeAttribute('aria-disabled');
@@ -270,7 +270,7 @@ import { contactFields } from '../lib/contact-fields';
 		}
 	}
 
-	// Sends the form to the contact action and returns the status message and tone of the result: the form is cleared only on success, the field errors that the action returns are shown at their fields, and a rejected call, such as a network failure, gives the unavailable message.
+	// Sends the form to the contact action and returns the status message and tone of the result.
 	async function submitToAction(): Promise<[string, Tone]> {
 		try {
 			const { error } = await actions.contact(new FormData(form));
@@ -295,7 +295,7 @@ import { contactFields } from '../lib/contact-fields';
 		}
 	}
 
-	// Sends the form, then resets the widget, because each token can be validated only once, and shows the result.
+	// Sends the form, resets the widget for a new token, and shows the result.
 	async function send() {
 		showStatus('', 'progress');
 		const [message, tone] = await submitToAction();
@@ -316,7 +316,7 @@ import { contactFields } from '../lib/contact-fields';
 		}
 	}
 
-	// Records a widget error or an interactive challenge that timed out and ends a waiting submission with the security message; returning true tells Turnstile that the error was handled, so it logs no warning.
+	// Handles a widget error or timeout: drops the token and ends a waiting submission; returning true marks the error as handled.
 	function handleWidgetFailure() {
 		token = '';
 		widgetFailed = true;
@@ -329,7 +329,7 @@ import { contactFields } from '../lib/contact-fields';
 		token = '';
 	}
 
-	// Renders the dark widget into the slot at the size that its space was reserved for.
+	// Renders the widget in the dark theme at the reserved size.
 	function renderWidget() {
 		widgetId = window.turnstile.render(slot, {
 			sitekey: TURNSTILE_SITE_KEY,
@@ -342,14 +342,14 @@ import { contactFields } from '../lib/contact-fields';
 		});
 	}
 
-	// Removes the script that failed to load, so that the next submit requests it again, and ends a waiting submission with the security message.
+	// Removes the script that failed to load so the next submit loads it again, and ends a waiting submission.
 	function handleScriptError(this: HTMLScriptElement) {
 		this.remove();
 		scriptRequested = false;
 		failWaiting();
 	}
 
-	// Unless the Turnstile script was already requested, reserves the widget's space in the slot, 65 pixels tall for the flexible widget when the slot is at least 300 pixels wide and 140 pixels for the compact widget otherwise, and loads the script.
+	// Reserves the widget's space and loads the Turnstile script, unless it was already requested.
 	function loadTurnstile() {
 		if (scriptRequested) {
 			return;
@@ -363,7 +363,7 @@ import { contactFields } from '../lib/contact-fields';
 		document.head.append(script);
 	}
 
-	// Checks the fields when the form is submitted and sends it once a Turnstile token is available; when the widget has failed, it is reset to try again, and a submit is ignored while another one is pending.
+	// Checks the fields on submit and sends the form once a Turnstile token is available.
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 		if (pending) {

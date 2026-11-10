@@ -1,18 +1,18 @@
 ---
-// Skills section: the section heading and the four skill groups from feed.txt, each a heading and its list of skills, in one column below 30rem, two columns from 30rem, and four from 80rem; the headings of a row share one height, so the lists beside each other start on the same line.
+// Skills section: the skill groups, each a heading and a list.
 import { profile } from '../data/profile';
 ---
 
 <section id="skills" class="section" aria-labelledby="skills-heading">
 	<h2 id="skills-heading">Skills</h2>
 	<div class="groups">
-		{/* Renders each skill group, in feed order: its name as a heading, then its skills as a list. */}
+		{/* Renders each group as a heading and a list of skills. */}
 		{
 			profile.skills.map((group) => (
 				<div class="group">
 					<h3>{group.name}</h3>
 					<ul>
-						{/* Renders each skill of the group as a list item. */}
+						{/* Renders each skill as a list item. */}
 						{group.items.map((skill) => <li>{skill}</li>)}
 					</ul>
 				</div>
